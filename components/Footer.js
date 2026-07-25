@@ -27,29 +27,26 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer style={{ background: '#0f1020' }} className="text-white">
+    <footer style={{ background: '#fbf8f1' }} className="text-gray-800">
       <div className="max-w-7xl mx-auto px-6 sm:px-10 py-16">
         <div className="grid md:grid-cols-4 gap-10 mb-12">
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-14 h-14 shrink-0 overflow-hidden">
-                <Image src="/logo.png" alt="Triphoga" width={56} height={56} className="w-full h-full object-contain" />
+              <div className="w-48 h-12 shrink-0 relative">
+                <Image src="/triphoga-logo.png" alt="Triphoga" fill className="object-contain object-left" />
               </div>
-              <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, lineHeight: 1.3, color: '#fff' }}>
-                Triphoga<br /><span style={{ color: '#7e5233' }}>Trips</span>
-              </span>
             </div>
-            <p className="text-sm leading-relaxed mb-4" style={{ color:'rgba(255,255,255,0.5)' }}>Curated travel experiences with day-wise itineraries and personal support.</p>
+            <p className="text-sm leading-relaxed mb-4" style={{ color:'#4b5563' }}>Curated travel experiences with day-wise itineraries and personal support.</p>
             <div className="flex gap-3">
-              <a href="https://www.instagram.com/greenkeralatrips?igsh=MXU3aG9rbmg0bHVvNw==" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background:'rgba(255,255,255,0.1)' }}><IgIcon/></a>
-              <a href="https://facebook.com/share/1CPWAyox1N/?ref=1" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background:'rgba(255,255,255,0.1)' }}><FbIcon/></a>
-              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background:'rgba(255,255,255,0.1)' }}><MessageCircle size={16}/></a>
+              <a href="https://www.instagram.com/greenkeralatrips?igsh=MXU3aG9rbmg0bHVvNw==" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><IgIcon/></a>
+              <a href="https://facebook.com/share/1CPWAyox1N/?ref=1" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><FbIcon/></a>
+              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><MessageCircle size={16}/></a>
             </div>
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'rgba(255,255,255,0.9)' }}>Destinations</h4>
-            <ul className="space-y-2 text-sm" style={{ color:'rgba(255,255,255,0.5)' }}>
+            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'#111827' }}>Destinations</h4>
+            <ul className="space-y-2 text-sm" style={{ color:'#4b5563' }}>
               {footerDests.map(d => (
                 <li key={d.id}><Link href="/#packages" className="flex items-center gap-1.5 hover:text-orange-400 transition-colors"><MapPin size={11}/>{d.emoji ? `${d.emoji} ` : ''}{d.name}</Link></li>
               ))}
@@ -64,8 +61,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'rgba(255,255,255,0.9)' }}>Quick Links</h4>
-            <ul className="space-y-2 text-sm" style={{ color:'rgba(255,255,255,0.5)' }}>
+            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'#111827' }}>Quick Links</h4>
+            <ul className="space-y-2 text-sm" style={{ color:'#4b5563' }}>
               {[['Home','/'],['Packages','/#packages'],['About','/#about'],['Contact','/#contact']].map(([l,h]) => (
                 <li key={l}><Link href={h} className="hover:text-orange-400 transition-colors">{l}</Link></li>
               ))}
@@ -73,8 +70,8 @@ export default function Footer() {
           </div>
 
           <div>
-            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'rgba(255,255,255,0.9)' }}>Contact</h4>
-            <ul className="space-y-3 text-sm" style={{ color:'rgba(255,255,255,0.5)' }}>
+            <h4 className="font-semibold text-sm tracking-wider uppercase mb-4" style={{ color:'#111827' }}>Contact</h4>
+            <ul className="space-y-3 text-sm" style={{ color:'#4b5563' }}>
               <li><a href={`tel:+${phone}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors"><Phone size={14}/> +{phone}</a></li>
               {email && <li><a href={`mailto:${email}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors"><Mail size={14}/> {email}</a></li>}
               {email2 && <li><a href={`mailto:${email2}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors"><Mail size={14}/> {email2}</a></li>}
@@ -84,8 +81,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="h-px mb-6" style={{ background:'rgba(255,255,255,0.1)' }} />
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style={{ color:'rgba(255,255,255,0.3)' }}>
+        <div className="h-px mb-6" style={{ background:'rgba(0,0,0,0.1)' }} />
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style={{ color:'#6b7280' }}>
           <p>© {new Date().getFullYear()} Triphoga. All rights reserved.</p>
           <p>Made with ❤️ for wanderers</p>
         </div>

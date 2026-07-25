@@ -42,7 +42,7 @@ export default function Navbar({ big = false }) {
           <Link href="/" className="flex items-center justify-center group">
             <div className="w-48 h-16 md:w-80 md:h-24 relative shrink-0">
               <Image
-                src="/logo.png"
+                src="/triphoga-logo.png"
                 alt="Triphoga"
                 fill
                 sizes="(max-width: 768px) 192px, 320px"

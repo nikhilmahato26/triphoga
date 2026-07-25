@@ -75,31 +75,31 @@ export default function FleetSection({ phone }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {FLEET.map(vehicle => (
-            <div key={vehicle.name} style={{ background: '#fff', borderRadius: 16, overflow: 'hidden', border: '1px solid #f3f4f6', boxShadow: '0 4px 12px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ position: 'relative', height: 160, background: '#f3f4f6' }}>
+            <div key={vehicle.name} style={{ background: '#fff', borderRadius: 16, overflow: 'hidden', border: '1px solid #e5e7eb', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'flex', flexDirection: 'column' }}>
+              <div style={{ position: 'relative', height: 140, background: '#f9fafb' }}>
                 <img src={vehicle.img} alt={vehicle.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: 12, left: 12, background: vehicle.tagBg, color: vehicle.tagColor, fontSize: 10, fontWeight: 700, padding: '4px 10px', borderRadius: 999, border: `1px solid ${vehicle.tagColor}30` }}>
+                <span style={{ position: 'absolute', top: 10, left: 10, background: vehicle.tagBg, color: vehicle.tagColor, fontSize: 9, fontWeight: 800, padding: '3px 8px', borderRadius: 999, textTransform: 'uppercase' }}>
                   {vehicle.tag}
                 </span>
-                <span style={{ position: 'absolute', bottom: 12, left: 12, background: 'rgba(255,255,255,0.9)', color: '#374151', fontSize: 11, fontWeight: 700, padding: '4px 10px', borderRadius: 999, display: 'flex', alignItems: 'center', gap: 4 }}>
+                <span style={{ position: 'absolute', bottom: 10, left: 10, background: 'rgba(255,255,255,0.95)', color: '#374151', fontSize: 10, fontWeight: 700, padding: '3px 8px', borderRadius: 999, display: 'flex', alignItems: 'center', gap: 4, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
                   👥 {vehicle.capacity}
                 </span>
               </div>
-              <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontSize: 10, color: '#9ca3af', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 4 }}>{vehicle.category}</div>
-                <h3 style={{ fontSize: 18, fontWeight: 800, color: '#111', marginBottom: 8 }}>{vehicle.name}</h3>
-                <p style={{ fontSize: 13, color: '#6b7280', lineHeight: 1.5, marginBottom: 16 }}>{vehicle.desc}</p>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 24, marginTop: 'auto' }}>
+              <div style={{ padding: '16px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+                <div style={{ fontSize: 9, color: '#9ca3af', fontWeight: 700, letterSpacing: '0.05em', marginBottom: 2, textTransform: 'uppercase' }}>{vehicle.category}</div>
+                <h3 style={{ fontSize: 16, fontWeight: 800, color: '#111', marginBottom: 6 }}>{vehicle.name}</h3>
+                <p style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.4, marginBottom: 12 }}>{vehicle.desc}</p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 20, marginTop: 'auto' }}>
                   {vehicle.features.map(f => (
-                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#4b5563' }}>
-                      <span style={{ color: '#22c55e' }}>⊙</span> {f}
+                    <div key={f} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11, color: '#4b5563' }}>
+                      <span style={{ color: '#8b5cf6', fontSize: 14 }}>⊙</span> {f}
                     </div>
                   ))}
                 </div>
-                <a href={`tel:+${phone}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', padding: '10px 0', borderRadius: 8, border: '1.5px solid #e5e7eb', background: '#fff', color: '#7e5233', fontWeight: 700, fontSize: 13, textDecoration: 'none', cursor: 'pointer' }}>
-                  <Phone size={14} /> BOOK THIS VEHICLE
+                <a href={`tel:+${phone}`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, width: '100%', padding: '8px 0', borderRadius: 8, border: '1px solid #e5e7eb', background: '#fff', color: '#6b7280', fontWeight: 700, fontSize: 11, textDecoration: 'none', cursor: 'pointer', transition: 'all 0.2s' }}>
+                  <Phone size={12} style={{ color: '#fbbf24' }} /> BOOK THIS VEHICLE
                 </a>
               </div>
             </div>

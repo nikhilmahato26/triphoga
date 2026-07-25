@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import HeroSlider from '@/components/HeroSlider'
 import AboutSection from '@/components/AboutSection'
+import FeaturesStrip from '@/components/FeaturesStrip'
+import FleetSummarySection from '@/components/FleetSummarySection'
 import FleetSection from '@/components/FleetSection'
 import ContactSection from '@/components/ContactSection'
 import PackageCard from '@/components/PackageCard'
@@ -125,6 +127,7 @@ export default function HomePage() {
       <Navbar />
       <HeroSlider />
       <AboutSection />
+      <FeaturesStrip />
 
       {/* ── Destinations ── */}
       <section id="destinations" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
@@ -325,6 +328,7 @@ export default function HomePage() {
       </section>
 
       <FleetSection phone={phone} />
+      <FleetSummarySection />
       <ContactSection phone={phone} email={email} whatsapp={whatsapp} />
 
       <Footer />
