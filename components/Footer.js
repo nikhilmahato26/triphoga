@@ -33,10 +33,10 @@ export default function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-14 h-14 shrink-0 overflow-hidden">
-                <Image src="https://res.cloudinary.com/dynbpb9u0/image/upload/v1779855779/WhatsApp_Image_2026-05-22_at_15.06.01-removebg-preview_mr6pdc.png" alt="Green Kerala Trips" width={56} height={56} className="w-full h-full object-contain" />
+                <Image src="/logo.png" alt="Triphoga" width={56} height={56} className="w-full h-full object-contain" />
               </div>
               <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, lineHeight: 1.3, color: '#fff' }}>
-                Green Kerala<br /><span style={{ color: '#e8520a' }}>Trips</span>
+                Triphoga<br /><span style={{ color: '#7e5233' }}>Trips</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color:'rgba(255,255,255,0.5)' }}>Curated travel experiences with day-wise itineraries and personal support.</p>
@@ -86,7 +86,7 @@ export default function Footer() {
 
         <div className="h-px mb-6" style={{ background:'rgba(255,255,255,0.1)' }} />
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs" style={{ color:'rgba(255,255,255,0.3)' }}>
-          <p>© {new Date().getFullYear()} Green Kerala Trips. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Triphoga. All rights reserved.</p>
           <p>Made with ❤️ for wanderers</p>
         </div>
       </div>

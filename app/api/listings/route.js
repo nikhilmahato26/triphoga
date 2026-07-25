@@ -21,7 +21,7 @@ export async function POST(request) {
     const { type, name, color, image_url, description, location, price, emoji, image_pos } = await request.json()
     if (!TYPES.includes(type)) return Response.json({ error: 'Invalid type' }, { status: 400 })
     if (!name?.trim()) return Response.json({ error: 'Name is required' }, { status: 400 })
-    const listing = await createListing(type, name.trim(), color || '#e8520a', { image_url, description, location, price, emoji, image_pos })
+    const listing = await createListing(type, name.trim(), color || '#7e5233', { image_url, description, location, price, emoji, image_pos })
     return Response.json(listing, { status: 201 })
   } catch (err) {
     return Response.json({ error: 'Failed to create listing' }, { status: 500 })

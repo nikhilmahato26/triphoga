@@ -52,7 +52,7 @@ export default function EnquiryForm({ pkg, isMobile, prefillMessage = '' }) {
       {status === 'error' && <p style={{ color: '#dc2626', fontSize: 13, marginBottom: 10 }}>Something went wrong. Please try again.</p>}
       <button type="submit" disabled={status === 'sending'}
         style={{ width: '100%', padding: '13px 0', borderRadius: 999, border: 'none',
-          background: status === 'sending' ? '#e5e7eb' : 'linear-gradient(135deg,#e8520a,#c93d00)',
+          background: status === 'sending' ? '#e5e7eb' : 'linear-gradient(135deg,#7e5233,#c93d00)',
           color: status === 'sending' ? '#9ca3af' : '#fff', fontWeight: 700, fontSize: 15,
           cursor: status === 'sending' ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
         {status === 'sending'

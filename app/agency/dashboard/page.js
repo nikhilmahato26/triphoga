@@ -97,7 +97,7 @@ export default function AgencyDashboard() {
     topbarInner: { maxWidth: 1100, margin: '0 auto', padding: '0 20px', height: 60, display: 'flex', alignItems: 'center', justifyContent: 'space-between' },
     body:        { maxWidth: 1100, margin: '0 auto', padding: '28px 20px' },
     card:        { background: '#fff', borderRadius: 16, boxShadow: '0 2px 8px rgba(0,0,0,0.06)', border: '1px solid #f3f4f6', overflow: 'hidden' },
-    btn:         (bg = '#e8520a', col = '#fff') => ({ padding: '8px 16px', borderRadius: 10, background: bg, color: col, border: 'none', fontWeight: 600, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }),
+    btn:         (bg = '#7e5233', col = '#fff') => ({ padding: '8px 16px', borderRadius: 10, background: bg, color: col, border: 'none', fontWeight: 600, fontSize: 13, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6 }),
     input:       { width: '100%', padding: '10px 12px', borderRadius: 10, border: '1.5px solid #e5e7eb', fontSize: 13, color: '#111', background: '#f9fafb', outline: 'none', boxSizing: 'border-box' },
     label:       { fontSize: 11, fontWeight: 700, color: '#6b7280', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: 5, display: 'block' },
     overlay:     { position: 'fixed', inset: 0, zIndex: 50, background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', padding: '32px 16px', overflowY: 'auto' },
@@ -263,7 +263,7 @@ export default function AgencyDashboard() {
     return (
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f0ece4' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ width: 40, height: 40, border: '3px solid #f0ebe1', borderTop: '3px solid #1e3a5f', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+          <div style={{ width: 40, height: 40, border: '3px solid #fbf8f1', borderTop: '3px solid #1e3a5f', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
           <p style={{ color: '#9ca3af', fontSize: 14 }}>Loading...</p>
         </div>
       </div>
@@ -279,7 +279,7 @@ export default function AgencyDashboard() {
         <div style={S.topbarInner}>
           <div>
             <div style={{ fontWeight: 700, fontSize: 15, color: '#111' }}>Agency Dashboard</div>
-            <div style={{ fontSize: 11, color: '#9ca3af' }}>Green Kerala Trips</div>
+            <div style={{ fontSize: 11, color: '#9ca3af' }}>Triphoga</div>
           </div>
           <div style={{ display: 'flex', gap: 8 }}>
             <Link href="/" target="_blank" style={{ ...S.btn('#f3f4f6', '#555'), textDecoration: 'none' }}>

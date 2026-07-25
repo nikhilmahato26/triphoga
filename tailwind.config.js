@@ -8,9 +8,9 @@ module.exports = {
         display: ['Syne', 'sans-serif'],
       },
       colors: {
-        saffron: { 50:'#fff7f0', 100:'#ffe4cc', 200:'#ffc999', 300:'#ffad66', 400:'#ff8533', 500:'#e8520a', DEFAULT:'#e8520a', 600:'#cc4400', 700:'#993300', 800:'#662200', 900:'#331100' },
-        navy:    { 50:'#f0f2ff', 100:'#d9ddff', 200:'#b3bcff', 300:'#8d9aff', 400:'#6779e8', 500:'#2e3da8', DEFAULT:'#2e3da8', 600:'#253296', 700:'#1c2575', 800:'#121854', 900:'#090d2e' },
-        cream:   { DEFAULT:'#f0ebe1', 50:'#faf8f4', 100:'#f5f0e8', 200:'#ede4d2', 300:'#e0d4bb' },
+        't-brown': { 50:'#fdf8f4', 100:'#faeee4', 200:'#f3d7c2', 300:'#e9bc9a', 400:'#da986d', 500:'#c97a48', DEFAULT:'#7e5233', 600:'#bc6137', 700:'#9d4c2e', 800:'#7e5233', 900:'#66422b' },
+        't-green': { 50:'#f1f7f4', 100:'#dceae3', 200:'#bcd6ca', 300:'#91bbaa', 400:'#659d88', 500:'#45816d', DEFAULT:'#153e2d', 600:'#326756', 700:'#285346', 800:'#224339', 900:'#153e2d' },
+        cream:   { DEFAULT:'#fbf8f1', 50:'#ffffff', 100:'#fbf8f1', 200:'#f2ead3', 300:'#e6d7b0' },
       },
       animation: {
         'fade-in': 'fadeIn 0.6s ease-out',

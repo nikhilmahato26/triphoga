@@ -2,6 +2,9 @@
 import { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import HeroSlider from '@/components/HeroSlider'
+import AboutSection from '@/components/AboutSection'
+import FleetSection from '@/components/FleetSection'
+import ContactSection from '@/components/ContactSection'
 import PackageCard from '@/components/PackageCard'
 import Footer from '@/components/Footer'
 import { usePackages } from '@/hooks/usePackages'
@@ -19,11 +22,11 @@ function ListingSection({ id, eyebrow, titlePre, titleHi, subtitle, items, showA
     <section id={id} style={{ padding: '80px 24px', background: bg }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: 48 }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#e8520a', marginBottom: 10 }}>
+          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
             {eyebrow}
           </p>
           <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
-            {titlePre} <span style={{ color: '#e8520a' }}>{titleHi}</span>
+            {titlePre} <span style={{ color: '#7e5233' }}>{titleHi}</span>
           </h2>
           <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>{subtitle}</p>
         </div>
@@ -56,7 +59,7 @@ function ListingSection({ id, eyebrow, titlePre, titleHi, subtitle, items, showA
           <div style={{ textAlign: 'center', marginTop: 36 }}>
             <button
               onClick={() => setShowAll(s => !s)}
-              style={{ padding: '12px 32px', borderRadius: 999, border: '1.5px solid #e8520a', background: '#fff', color: '#e8520a', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
+              style={{ padding: '12px 32px', borderRadius: 999, border: '1.5px solid #7e5233', background: '#fff', color: '#7e5233', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
             >
               {showAll ? 'Show less' : `Show more (${visible.length - 4})`}
             </button>
@@ -77,8 +80,7 @@ const CATEGORY_TABS = [
 ]
 
 export default function HomePage() {
-  const [activeCategory, setActiveCategory] = useState('all')
-  const [activeDest, setActiveDest] = useState('all')
+    const [activeDest, setActiveDest] = useState('all')
   const [destinations, setDestinations] = useState([])
   const [showAllDest, setShowAllDest] = useState(false)
   const [homestays, setHomestays] = useState([])
@@ -108,13 +110,10 @@ export default function HomePage() {
   const visibleDestinations = destinations.filter(d => d.featured !== false)
 
   const shown = packages.filter(p => {
-    const matchCat = activeCategory === 'all' || p.category === activeCategory
-    const matchDest = activeDest === 'all' || p.destination === activeDest
-    return matchCat && matchDest
+    return activeDest === 'all' || p.destination === activeDest
   })
 
   const selectListing = (category, name) => {
-    setActiveCategory(category)
     setActiveDest(name)
     document.getElementById('packages')?.scrollIntoView({ behavior: 'smooth' })
   }
@@ -125,16 +124,17 @@ export default function HomePage() {
     <main style={{ minHeight: '100vh', background: '#fff' }}>
       <Navbar />
       <HeroSlider />
+      <AboutSection />
 
       {/* ── Destinations ── */}
-      <section id="destinations" style={{ padding: '80px 24px', background: '#f0ebe1' }}>
+      <section id="destinations" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#e8520a', marginBottom: 10 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
               Where We Go
             </p>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
-              Our Most Beautiful <span style={{ color: '#e8520a' }}>Destinations</span>
+              Our Featured <span style={{ color: '#7e5233' }}>Categories</span>
             </h2>
             <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
               Handpicked spots across God&apos;s Own Country — from misty hill stations to sun-lit backwaters.
@@ -174,7 +174,7 @@ export default function HomePage() {
             <div style={{ textAlign: 'center', marginTop: 36 }}>
               <button
                 onClick={() => setShowAllDest(s => !s)}
-                style={{ padding: '12px 32px', borderRadius: 999, border: '1.5px solid #e8520a', background: '#fff', color: '#e8520a', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
+                style={{ padding: '12px 32px', borderRadius: 999, border: '1.5px solid #7e5233', background: '#fff', color: '#7e5233', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
               >
                 {showAllDest ? 'Show less' : `Show more (${visibleDestinations.length - 4})`}
               </button>
@@ -183,49 +183,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Homestays ── */}
-      <ListingSection
-        id="homestays"
-        eyebrow="Stay Local"
-        titlePre="Cozy"
-        titleHi="Homestays"
-        subtitle="Authentic stays with local families — comfort, home-cooked food & warm Kerala hospitality."
-        items={homestays}
-        showAll={showAllHS}
-        setShowAll={setShowAllHS}
-        onSelect={name => selectListing('homestay', name)}
-        countFor={pkgCount}
-        bg="#fff"
-        defaultEmoji="🏡"
-        defaultImg="https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80"
-      />
-
-      {/* ── Houseboats ── */}
-      <ListingSection
-        id="houseboats"
-        eyebrow="On The Water"
-        titlePre="Backwater"
-        titleHi="Houseboats"
-        subtitle="Drift through Kerala's tranquil backwaters aboard a traditional kettuvallam, in full comfort."
-        items={houseboats}
-        showAll={showAllHB}
-        setShowAll={setShowAllHB}
-        onSelect={name => selectListing('houseboat', name)}
-        countFor={pkgCount}
-        bg="#f0ebe1"
-        defaultEmoji="🛶"
-        defaultImg="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=800&q=80"
-      />
+      
+      
 
       {/* ── Packages ── */}
       <section id="packages" style={{ padding: '80px 24px', background: '#fff' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 40 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#e8520a', marginBottom: 10 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
               Curated Experiences
             </p>
             <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
-              Our <span style={{ color: '#e8520a' }}>Packages</span>
+              Our <span style={{ color: '#7e5233' }}>Packages</span>
             </h2>
             <p style={{ color: '#9ca3af', maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.6 }}>
               Every package includes a day-wise itinerary, accommodation & transfers.
@@ -233,50 +202,33 @@ export default function HomePage() {
 
             {/* Category tabs */}
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 8, marginBottom: 16 }}>
-              {CATEGORY_TABS.map(tab => (
+              <button
+                onClick={() => setActiveDest('all')}
+                style={{
+                  padding: '8px 20px', borderRadius: 999, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s',
+                  background: activeDest === 'all' ? 'linear-gradient(135deg,#7e5233,#c93d00)' : '#f5f0e8',
+                  color: activeDest === 'all' ? '#fff' : '#555',
+                }}>
+                All Categories
+              </button>
+              {destinations.map(d => (
                 <button
-                  key={tab.value}
-                  onClick={() => { setActiveCategory(tab.value); setActiveDest('all') }}
+                  key={d.id}
+                  onClick={() => setActiveDest(d.name)}
                   style={{
                     padding: '8px 20px', borderRadius: 999, fontSize: 13, fontWeight: 600, border: 'none', cursor: 'pointer', transition: 'all 0.2s',
-                    background: activeCategory === tab.value ? 'linear-gradient(135deg,#e8520a,#c93d00)' : '#f5f0e8',
-                    color: activeCategory === tab.value ? '#fff' : '#555',
+                    background: activeDest === d.name ? 'linear-gradient(135deg,#7e5233,#c93d00)' : '#f5f0e8',
+                    color: activeDest === d.name ? '#fff' : '#555',
                   }}>
-                  {tab.label}
+                  {d.name}
                 </button>
               ))}
             </div>
-
-            {/* Destination dropdown filter */}
-            {destinations.length > 0 && (
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <div style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}>
-                  <MapPin size={13} style={{ position: 'absolute', left: 12, color: activeDest !== 'all' ? '#e8520a' : '#9ca3af', pointerEvents: 'none', zIndex: 1 }} />
-                  <select
-                    value={activeDest}
-                    onChange={e => setActiveDest(e.target.value)}
-                    style={{
-                      padding: '8px 36px 8px 30px', borderRadius: 999, fontSize: 13, fontWeight: 600, cursor: 'pointer',
-                      border: `1.5px solid ${activeDest !== 'all' ? '#e8520a' : '#e5e7eb'}`,
-                      background: activeDest !== 'all' ? '#fff5ef' : '#f5f0e8',
-                      color: activeDest !== 'all' ? '#e8520a' : '#555',
-                      appearance: 'none', outline: 'none',
-                    }}
-                  >
-                    <option value="all">All Destinations</option>
-                    {destinations.map(d => (
-                      <option key={d.id} value={d.name}>{d.emoji} {d.name}</option>
-                    ))}
-                  </select>
-                  <ChevronDown size={13} style={{ position: 'absolute', right: 12, color: activeDest !== 'all' ? '#e8520a' : '#9ca3af', pointerEvents: 'none' }} />
-                </div>
-              </div>
-            )}
           </div>
 
           {!pkgsLoaded ? (
             <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-              <div style={{ width: 36, height: 36, border: '3px solid #f0ebe1', borderTop: '3px solid #e8520a', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+              <div style={{ width: 36, height: 36, border: '3px solid #fbf8f1', borderTop: '3px solid #7e5233', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
               <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
               <p style={{ fontSize: 14 }}>Loading packages...</p>
             </div>
@@ -284,7 +236,7 @@ export default function HomePage() {
             <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
               <div style={{ fontSize: 48, marginBottom: 12 }}>🗺️</div>
               <p>No packages available for this selection.</p>
-              <button onClick={() => { setActiveCategory('all'); setActiveDest('all') }} style={{ marginTop: 12, padding: '8px 20px', borderRadius: 999, border: 'none', background: '#f5f0e8', color: '#555', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
+              <button onClick={() => { setActiveDest('all') }} style={{ marginTop: 12, padding: '8px 20px', borderRadius: 999, border: 'none', background: '#f5f0e8', color: '#555', fontWeight: 600, fontSize: 13, cursor: 'pointer' }}>
                 Clear Filters
               </button>
             </div>
@@ -293,154 +245,87 @@ export default function HomePage() {
               {shown.map(pkg => <PackageCard key={pkg.id} pkg={pkg} phone={phone} />)}
             </div>
           )}
+          
+          <div style={{ textAlign: 'center', marginTop: 40 }}>
+            <Link href="/packages" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 32px', borderRadius: 999, background: '#7e5233', color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
+              View All Packages <ArrowRight size={18} />
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* ── Why us ── */}
-      <section id="about" style={{ padding: '80px 24px', background: '#f0ebe1' }}>
+      {/* ── Testimonials ── */}
+      <section id="testimonials" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 56, alignItems: 'center' }}>
-            <div>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#e8520a', marginBottom: 12 }}>Why Green Kerala Trips</p>
-              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 16, lineHeight: 1.1 }}>
-                Travel <span style={{ color: '#e8520a' }}>Thoughtfully</span>
-              </h2>
-              <p style={{ color: '#6b7280', lineHeight: 1.7, marginBottom: 32 }}>
-                We&apos;re not just a travel company — we&apos;re a community of explorers who believe tourists deserve more than a postcard visit. From houseboat nights to spice-farm mornings, we craft journeys that go beyond the tourist trail.
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                {[
-                  { icon: Star,   t: 'Curated Packages', d: 'Every detail handpicked' },
-                  { icon: Clock,  t: 'Day-wise Plans',   d: 'Hour by hour clarity' },
-                  { icon: Shield, t: 'Safe Travels',     d: 'Verified accommodations' },
-                  { icon: Users,  t: 'Small Groups',     d: 'Intimate experiences' },
-                ].map(({ icon: I, t, d }) => (
-                  <div key={t} style={{ background: '#fff', borderRadius: 16, padding: '16px', boxShadow: '0 2px 8px rgba(0,0,0,0.06)' }}>
-                    <div style={{ width: 36, height: 36, borderRadius: 10, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 10 }}>
-                      <I size={17} style={{ color: '#e8520a' }} />
-                    </div>
-                    <div style={{ fontWeight: 600, fontSize: 13, color: '#111' }}>{t}</div>
-                    <div style={{ fontSize: 12, color: '#9ca3af', marginTop: 2 }}>{d}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div style={{ position: 'relative' }}>
-              <div style={{ borderRadius: 24, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.2)', aspectRatio: '1/1', maxWidth: 480, margin: '0 auto' }}>
-                <img src="https://images.unsplash.com/photo-1589983846997-04788035bc83?q=80" alt="Kerala" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ position: 'absolute', bottom: -16, left: -16, background: '#fff', borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,0.15)', padding: '16px 20px' }}>
-                <div style={{ fontSize: 28, fontWeight: 800, color: '#e8520a' }}>500+</div>
-                <div style={{ fontSize: 12, color: '#6b7280' }}>Happy travellers</div>
-              </div>
-              <div style={{ position: 'absolute', top: -16, right: -16, background: '#fff', borderRadius: 16, boxShadow: '0 8px 30px rgba(0,0,0,0.15)', padding: '12px 16px' }}>
-                <div style={{ display: 'flex', gap: 2, marginBottom: 4 }}>
-                  {[...Array(5)].map((_, i) => <Star key={i} size={13} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
+              What They Say
+            </p>
+            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+              Client <span style={{ color: '#7e5233' }}>Testimonials</span>
+            </h2>
+            <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
+              Real stories from our happy travellers.
+            </p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+            {[
+              { name: 'Anjali Sharma', text: 'Triphoga arranged the most beautiful Munnar trip for us. The itinerary was perfectly balanced and the homestay was breathtaking!' },
+              { name: 'Rahul Verma', text: 'Our houseboat experience in Alleppey was magical. The team took care of every single detail. Highly recommend their services.' },
+              { name: 'Sarah Jenkins', text: 'A completely hassle-free spiritual tour across Kerala. The guides were knowledgeable and everything went extremely smoothly.' }
+            ].map((t, idx) => (
+              <div key={idx} style={{ background: '#fff', padding: 32, borderRadius: 20, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
+                <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
+                  {[...Array(5)].map((_, i) => <Star key={i} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
                 </div>
-                <div style={{ fontSize: 11, fontWeight: 600, color: '#374151' }}>Rated 4.9/5</div>
+                <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.6, fontStyle: 'italic', marginBottom: 24 }}>&quot;{t.text}&quot;</p>
+                <div style={{ fontWeight: 700, color: '#111', fontSize: 15 }}>- {t.name}</div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── Join as Agency ── */}
-      <section id="join-agency" style={{ padding: '80px 24px', background: '#fff' }}>
+      {/* ── Gallery ── */}
+      <section id="gallery" style={{ padding: '80px 24px', background: '#fff' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 48, alignItems: 'center' }}>
-            {/* Left — copy */}
-            <div>
-              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#2e3da8', marginBottom: 12 }}>
-                For Travel Agencies
-              </p>
-              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', color: '#111', marginBottom: 16, lineHeight: 1.1 }}>
-                Partner With Us &<br /><span style={{ color: '#e8520a' }}>Grow Together</span>
-              </h2>
-              <p style={{ color: '#6b7280', lineHeight: 1.7, marginBottom: 24, fontSize: 15 }}>
-                Are you a Kerala travel agency with great packages? List them on our platform, reach thousands of travellers, and grow your business with zero upfront cost.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 32 }}>
-                {[
-                  'Submit packages directly from your agency dashboard',
-                  'Each package is reviewed and published by our team',
-                  'Get enquiries from travellers looking for experiences',
-                  'Completely free to join — just apply below',
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-                    <CheckCircle size={16} style={{ color: '#22c55e', flexShrink: 0, marginTop: 2 }} />
-                    <span style={{ fontSize: 14, color: '#374151', lineHeight: 1.5 }}>{item}</span>
-                  </div>
-                ))}
+          <div style={{ textAlign: 'center', marginBottom: 48 }}>
+            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
+              Visual Journey
+            </p>
+            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+              Explore Our <span style={{ color: '#7e5233' }}>Gallery</span>
+            </h2>
+            <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
+              A glimpse into the magical experiences waiting for you.
+            </p>
+          </div>
+          
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+            {[
+              "https://images.unsplash.com/photo-1593693397690-362cb96667a0?q=80&w=800",
+              "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800",
+              "https://images.unsplash.com/photo-1589983846997-04788035bc83?q=80&w=800",
+              "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800",
+              "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=800",
+              "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800"
+            ].map((src, idx) => (
+              <div key={idx} style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+                <img 
+                  src={src} 
+                  alt={`Gallery image ${idx + 1}`} 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s cursor-pointer' }} 
+                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                />
               </div>
-              <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-                <Link href="/agency/register"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '13px 28px', borderRadius: 999, background: 'linear-gradient(135deg,#e8520a,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-                  <Building2 size={16} /> Apply to Join
-                </Link>
-                <Link href="/agency"
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '13px 28px', borderRadius: 999, background: '#f0ebe1', color: '#555', fontWeight: 700, fontSize: 14, textDecoration: 'none' }}>
-                  Agency Login <ArrowRight size={15} />
-                </Link>
-              </div>
-            </div>
-
-            {/* Right — visual card grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              {[
-                { icon: Building2, title: 'Register', desc: 'Submit your agency details and credentials', color: '#e8520a', bg: '#fff5ef' },
-                { icon: Clock,     title: 'Review',   desc: 'Our admin reviews and approves your application', color: '#f59e0b', bg: '#fffbeb' },
-                { icon: Star,      title: 'List',     desc: 'Create and submit packages from your dashboard', color: '#2e3da8', bg: '#eff1ff' },
-                { icon: Users,     title: 'Connect',  desc: 'Travellers discover your packages and enquire', color: '#22c55e', bg: '#f0fdf4' },
-              ].map(({ icon: I, title, desc, color, bg }) => (
-                <div key={title} style={{ background: bg, borderRadius: 16, padding: '20px', border: `1px solid ${color}20` }}>
-                  <div style={{ width: 40, height: 40, borderRadius: 12, background: color + '20', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 12 }}>
-                    <I size={20} style={{ color }} />
-                  </div>
-                  <div style={{ fontWeight: 700, fontSize: 14, color: '#111', marginBottom: 4 }}>{title}</div>
-                  <div style={{ fontSize: 12, color: '#6b7280', lineHeight: 1.5 }}>{desc}</div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section id="contact" style={{ padding: '80px 24px', background: '#2e3da8' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)', marginBottom: 12 }}>Ready to Go?</p>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#fff', marginBottom: 14, lineHeight: 1.1 }}>
-            Let&apos;s Plan Your <span style={{ color: '#fbbf24' }}> Journey</span>
-          </h2>
-          <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 17, lineHeight: 1.6, marginBottom: 16 }}>
-            Tell us your dates and preferred destination — we&apos;ll craft the perfect  itinerary for you.
-          </p>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'center', color: 'rgba(255,255,255,0.5)', fontSize: 14, marginBottom: 32 }}>
-            <MapPin size={14} /> Kerala, India
-          </div>
-          <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href={`tel:+${phone}`} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', borderRadius: 999, background: 'linear-gradient(135deg,#fbbf24,#f59e0b)', color: '#1c1c1c', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
-              <Phone size={18} /> Call Us Now
-            </a>
-            <a href={`https://wa.me/${whatsapp}?text=Hi! I want to book a Kerala trip`} target="_blank" rel="noopener noreferrer"
-              style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', borderRadius: 999, background: 'linear-gradient(135deg,#25d366,#128c7e)', color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
-              <MessageCircle size={18} /> WhatsApp Us
-            </a>
-            {email && (
-              <a href={`mailto:${email}`}
-                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', borderRadius: 999, background: 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
-                <Mail size={18} /> Email Us
-              </a>
-            )}
-            {/* {email2 && (
-              <a href={`mailto:${email2}`}
-                style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 32px', borderRadius: 999, background: 'rgba(255,255,255,0.15)', color: '#fff', fontWeight: 700, fontSize: 15, textDecoration: 'none' }}>
-                <Mail size={18} /> Email Us (2)
-              </a>
-            )} */}
-          </div>
-        </div>
-      </section>
+      <FleetSection phone={phone} />
+      <ContactSection phone={phone} email={email} whatsapp={whatsapp} />
 
       <Footer />
 

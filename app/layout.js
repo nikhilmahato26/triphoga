@@ -2,7 +2,7 @@ import './globals.css'
 import { Toaster } from 'sonner'
 
 export const metadata = {
-  title: 'Green Kerala Trips — Kerala Tour Packages & Homestays',
+  title: 'Triphoga — Kerala Tour Packages & Homestays',
   description: 'Handcrafted travel experiences across Kerala. Curated group packages & homestay bookings with day-wise itineraries.',
   icons: {
     icon: '/icon.png',

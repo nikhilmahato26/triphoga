@@ -118,12 +118,12 @@ export default function ForgotPasswordPage() {
             const active = (n === 1 && step === 'email') || (n === 2 && step === 'reset')
             const done = n === 1 && step === 'reset'
             return (
-              <div key={n} style={{ flex: 1, padding: '10px 0', textAlign: 'center', borderBottom: active ? '2px solid #e8520a' : '2px solid transparent' }}>
+              <div key={n} style={{ flex: 1, padding: '10px 0', textAlign: 'center', borderBottom: active ? '2px solid #7e5233' : '2px solid transparent' }}>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
-                  <div style={{ width: 20, height: 20, borderRadius: '50%', background: done ? '#22c55e' : active ? '#e8520a' : '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: done || active ? '#fff' : '#9ca3af' }}>
+                  <div style={{ width: 20, height: 20, borderRadius: '50%', background: done ? '#22c55e' : active ? '#7e5233' : '#e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: done || active ? '#fff' : '#9ca3af' }}>
                     {done ? <Check size={11} /> : n}
                   </div>
-                  <span style={{ fontSize: 12, fontWeight: 600, color: active ? '#e8520a' : done ? '#22c55e' : '#9ca3af' }}>{label}</span>
+                  <span style={{ fontSize: 12, fontWeight: 600, color: active ? '#7e5233' : done ? '#22c55e' : '#9ca3af' }}>{label}</span>
                 </div>
               </div>
             )
@@ -229,7 +229,7 @@ export default function ForgotPasswordPage() {
               </button>
               <span style={{ color: '#e5e7eb' }}>·</span>
               <button type="button" onClick={() => { setError(''); setOtp(''); sendOtp() }} disabled={resendCooldown > 0 || loading}
-                style={{ background: 'none', border: 'none', cursor: resendCooldown > 0 ? 'not-allowed' : 'pointer', fontSize: 13, color: resendCooldown > 0 ? '#9ca3af' : '#e8520a', fontWeight: 600 }}>
+                style={{ background: 'none', border: 'none', cursor: resendCooldown > 0 ? 'not-allowed' : 'pointer', fontSize: 13, color: resendCooldown > 0 ? '#9ca3af' : '#7e5233', fontWeight: 600 }}>
                 {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : 'Resend Code'}
               </button>
             </div>

@@ -17,7 +17,7 @@ const FALLBACK_SLIDES = [
     tagline: 'Float Through Alleppey',
     desc: 'Glide through emerald backwaters on a traditional houseboat, surrounded by coconut palms and village life.',
     image: 'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=1600&q=85',
-    accent: '#e8520a',
+    accent: '#7e5233',
     tag: 'Alleppey',
     badge: 'Homestays',
   },
@@ -26,7 +26,7 @@ const FALLBACK_SLIDES = [
     tagline: 'Misty Hills & Green Carpets',
     desc: 'Wake up to tea-scented mist, trek through shola forests, and sip freshly brewed estate chai.',
     image: 'https://images.unsplash.com/photo-1637066742971-726bee8d9f56?q=80',
-    accent: '#2e3da8',
+    accent: '#153e2d',
     tag: 'Munnar',
     badge: 'Group Tours',
   },
@@ -38,7 +38,7 @@ function pkgToSlide(pkg) {
     tagline: pkg.subtitle || pkg.badge || '',
     desc: pkg.overview ? pkg.overview.slice(0, 160) + (pkg.overview.length > 160 ? '…' : '') : '',
     image: pkg.heroImage || pkg.image || '',
-    accent: pkg.badgeColor || '#e8520a',
+    accent: pkg.badgeColor || '#7e5233',
     tag: pkg.destination || '',
     badge: pkg.badge || '',
     pkgId: pkg.id,
@@ -124,7 +124,7 @@ export default function HeroSlider() {
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
               <a href={slide.pkgId ? `/packages/${slide.pkgId}` : '#packages'}
-                style={{ padding: '12px 28px', borderRadius: 999, background: 'linear-gradient(135deg,#e8520a,#c93d00)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
+                style={{ padding: '12px 28px', borderRadius: 999, background: 'linear-gradient(135deg,#7e5233,#c93d00)', color: '#fff', fontWeight: 600, fontSize: 14, textDecoration: 'none' }}>
                 {slide.pkgId ? 'View Package' : 'View Packages'}
               </a>
               <a href="#packages"
@@ -145,7 +145,7 @@ export default function HeroSlider() {
         <div style={{ display: 'flex', gap: 8 }}>
           {slides.map((_, i) => (
             <button key={i} onClick={() => go(i)}
-              style={{ height: 8, borderRadius: 999, width: i === current ? 28 : 8, background: i === current ? '#e8520a' : 'rgba(255,255,255,0.5)', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }} />
+              style={{ height: 8, borderRadius: 999, width: i === current ? 28 : 8, background: i === current ? '#7e5233' : 'rgba(255,255,255,0.5)', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease' }} />
           ))}
         </div>
         <button onClick={next}
@@ -154,18 +154,7 @@ export default function HeroSlider() {
         </button>
       </div>
 
-      {/* Destination pills */}
-      {slides.length > 1 && (
-        <div style={{ position: 'absolute', bottom: 120, right: 24, zIndex: 4, display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {slides.map((s, i) => (
-            <button key={i} onClick={() => go(i)}
-              style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '6px 14px', borderRadius: 999, background: i === current ? (s.accent || '#e8520a') + 'cc' : 'rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)', border: `1px solid ${i === current ? (s.accent || '#e8520a') : 'rgba(255,255,255,0.2)'}`, color: '#fff', fontSize: 12, fontWeight: 600, cursor: 'pointer', transition: 'all 0.25s' }}>
-              <MapPin size={11} />
-              {s.tag || s.title?.split(' ')[0]}
-            </button>
-          ))}
-        </div>
-      )}
+
     </section>
   )
 }

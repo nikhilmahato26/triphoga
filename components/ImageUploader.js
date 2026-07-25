@@ -51,7 +51,7 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
     deletePrevious(prev, '')
   }
 
-  const spin = <span style={{ width: 20, height: 20, border: '3px solid rgba(232,82,10,0.25)', borderTop: '3px solid #e8520a', borderRadius: '50%', animation: 'iuspin 0.8s linear infinite', display: 'inline-block' }} />
+  const spin = <span style={{ width: 20, height: 20, border: '3px solid rgba(232,82,10,0.25)', borderTop: '3px solid #7e5233', borderRadius: '50%', animation: 'iuspin 0.8s linear infinite', display: 'inline-block' }} />
 
   return (
     <div style={{ marginTop: 6 }}>
@@ -59,7 +59,7 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
       <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: 'none' }} />
 
       {uploading ? (
-        <div style={{ height, borderRadius: rounded, background: '#f9fafb', border: '1.5px dashed #e5e7eb', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, color: '#e8520a' }}>
+        <div style={{ height, borderRadius: rounded, background: '#f9fafb', border: '1.5px dashed #e5e7eb', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 10, color: '#7e5233' }}>
           {spin}
           <span style={{ fontSize: 12, fontWeight: 600, color: '#9a3412' }}>Uploading…</span>
         </div>
@@ -88,10 +88,10 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
           onDragOver={e => { e.preventDefault(); setDragOver(true) }}
           onDragLeave={() => setDragOver(false)}
           onDrop={onDrop}
-          style={{ width: '100%', height, borderRadius: rounded, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, textAlign: 'center', padding: 12, background: dragOver ? '#fff5ef' : '#f9fafb', border: `1.5px dashed ${dragOver ? '#e8520a' : '#d1d5db'}`, transition: 'background 0.15s, border-color 0.15s' }}
+          style={{ width: '100%', height, borderRadius: rounded, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, textAlign: 'center', padding: 12, background: dragOver ? '#fff5ef' : '#f9fafb', border: `1.5px dashed ${dragOver ? '#7e5233' : '#d1d5db'}`, transition: 'background 0.15s, border-color 0.15s' }}
         >
           <div style={{ width: 42, height: 42, borderRadius: 12, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <ImagePlus size={20} style={{ color: '#e8520a' }} />
+            <ImagePlus size={20} style={{ color: '#7e5233' }} />
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, color: '#374151', display: 'inline-flex', alignItems: 'center', gap: 6 }}><Upload size={13} /> Upload image</span>
           <span style={{ fontSize: 11, color: '#9ca3af' }}>Click or drop a file · PNG/JPG up to 10 MB</span>

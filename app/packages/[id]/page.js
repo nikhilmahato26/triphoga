@@ -96,7 +96,7 @@ export default function PackagePage({ params }) {
   if (loading) return (
     <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f9fafb' }}>
       <div style={{ textAlign: 'center' }}>
-        <div style={{ width: 40, height: 40, border: '3px solid #f0ebe1', borderTop: '3px solid #e8520a', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
+        <div style={{ width: 40, height: 40, border: '3px solid #fbf8f1', borderTop: '3px solid #7e5233', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
         <p style={{ color: '#9ca3af' }}>Loading package...</p>
       </div>
     </div>
@@ -107,7 +107,7 @@ export default function PackagePage({ params }) {
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: 64, marginBottom: 16 }}>🗺️</div>
         <h2 style={{ fontSize: 24, fontWeight: 700, color: '#374151', marginBottom: 8 }}>Package not found</h2>
-        <Link href="/" style={{ color: '#e8520a', textDecoration: 'underline' }}>← Back to home</Link>
+        <Link href="/" style={{ color: '#7e5233', textDecoration: 'underline' }}>← Back to home</Link>
       </div>
     </main>
   )
@@ -190,7 +190,7 @@ export default function PackagePage({ params }) {
                   {pkg.highlights.map((h, i) => (
                     <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#374151' }}>
                       <span style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: 1 }}>
-                        <Check size={10} style={{ color: '#e8520a' }} strokeWidth={3} />
+                        <Check size={10} style={{ color: '#7e5233' }} strokeWidth={3} />
                       </span>
                       {h}
                     </li>
@@ -277,7 +277,7 @@ export default function PackagePage({ params }) {
                           style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: openDay === i ? '#fff8f5' : '#fff', border: 'none', cursor: 'pointer', textAlign: 'left' }}
                         >
                           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg,#e8520a,#c93d00)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
+                            <div style={{ width: 34, height: 34, borderRadius: '50%', background: 'linear-gradient(135deg,#7e5233,#c93d00)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 12, fontWeight: 700, flexShrink: 0 }}>
                               {day.day}
                             </div>
                             <div>
@@ -300,7 +300,7 @@ export default function PackagePage({ params }) {
                             {acts.length > 0 && (
                               <div style={{ position: 'relative', paddingLeft: 0, marginTop: day.description ? 0 : 14 }}>
                                 {/* Vertical line */}
-                                <div style={{ position: 'absolute', left: 44, top: 0, bottom: day.hotel ? 40 : 0, width: 2, background: '#f0ebe1', zIndex: 0 }} />
+                                <div style={{ position: 'absolute', left: 44, top: 0, bottom: day.hotel ? 40 : 0, width: 2, background: '#fbf8f1', zIndex: 0 }} />
                                 {acts.map((act, ai) => (
                                   <div key={ai} style={{ display: 'flex', gap: 0, marginBottom: 20, position: 'relative' }}>
                                     {/* Time bubble */}
@@ -310,7 +310,7 @@ export default function PackagePage({ params }) {
                                           {act.time}
                                         </div>
                                       ) : (
-                                        <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#e8520a', border: '2px solid #fff', boxShadow: '0 0 0 2px #fbd0b5', marginTop: 6 }} />
+                                        <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#7e5233', border: '2px solid #fff', boxShadow: '0 0 0 2px #fbd0b5', marginTop: 6 }} />
                                       )}
                                     </div>
                                     {/* Activity card */}
@@ -400,7 +400,7 @@ export default function PackagePage({ params }) {
             {/* ── Enquiry Form ── */}
             <section style={{ background: '#f9fafb', borderRadius: 20, padding: isMobile ? 20 : 28, border: '1px solid #f3f4f6' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#e8520a,#c93d00)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'linear-gradient(135deg,#7e5233,#c93d00)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                   <Send size={16} style={{ color: '#fff' }} />
                 </div>
                 <div>
@@ -471,7 +471,7 @@ export default function PackagePage({ params }) {
                     disabled={enquiryStatus === 'sending'}
                     style={{
                       width: '100%', padding: '13px 0', borderRadius: 999, border: 'none',
-                      background: enquiryStatus === 'sending' ? '#e5e7eb' : 'linear-gradient(135deg,#e8520a,#c93d00)',
+                      background: enquiryStatus === 'sending' ? '#e5e7eb' : 'linear-gradient(135deg,#7e5233,#c93d00)',
                       color: enquiryStatus === 'sending' ? '#9ca3af' : '#fff',
                       fontWeight: 700, fontSize: 15, cursor: enquiryStatus === 'sending' ? 'not-allowed' : 'pointer',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
@@ -492,7 +492,7 @@ export default function PackagePage({ params }) {
             <div>
               <div style={{ position: 'sticky', top: 88 }}>
                 <div style={{ background: '#fff', borderRadius: 20, boxShadow: '0 8px 40px rgba(0,0,0,0.12)', border: '1px solid #f3f4f6', overflow: 'hidden' }}>
-                  <div style={{ padding: '24px', background: 'linear-gradient(135deg,#e8520a,#c93d00)' }}>
+                  <div style={{ padding: '24px', background: 'linear-gradient(135deg,#7e5233,#c93d00)' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
                       <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.65)', textDecoration: 'line-through' }}>{fmt(pkg.originalPrice)}</span>
                       <span style={{ fontSize: 11, fontWeight: 700, padding: '2px 8px', borderRadius: 999, background: 'rgba(255,255,255,0.2)', color: '#fff' }}>
@@ -562,7 +562,7 @@ export default function PackagePage({ params }) {
 
                     <a
                       href={`tel:+${phone}`}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', padding: '13px 0', borderRadius: 999, background: 'linear-gradient(135deg,#e8520a,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', padding: '13px 0', borderRadius: 999, background: 'linear-gradient(135deg,#7e5233,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 14, textDecoration: 'none', marginBottom: 10 }}
                     >
                       <Phone size={16} /> Call to Book
                     </a>
@@ -590,7 +590,7 @@ export default function PackagePage({ params }) {
       {isMobile && (
         <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50, background: '#fff', borderTop: '1px solid #f3f4f6', boxShadow: '0 -4px 20px rgba(0,0,0,0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 6, padding: '7px 16px', background: '#fff7ed', borderBottom: '1px solid #fde9d3' }}>
-            <Info size={12} style={{ color: '#e8520a', flexShrink: 0, marginTop: 1 }} />
+            <Info size={12} style={{ color: '#7e5233', flexShrink: 0, marginTop: 1 }} />
             <span style={{ fontSize: 11, color: '#9a3412', lineHeight: 1.4 }}>
               {Number(pkg.childPrice) > 0 ? `${fmt(pkg.childPrice)}/child · ` : ''}Rate may change based on your customization.
             </span>
@@ -598,13 +598,13 @@ export default function PackagePage({ params }) {
           <div style={{ padding: '10px 16px', display: 'flex', gap: 10, alignItems: 'center' }}>
           <div style={{ flex: 1 }}>
             <div style={{ fontSize: 11, color: '#9ca3af', textDecoration: 'line-through' }}>{fmt(pkg.originalPrice)}</div>
-            <div style={{ fontSize: 20, fontWeight: 800, color: '#e8520a' }}>
+            <div style={{ fontSize: 20, fontWeight: 800, color: '#7e5233' }}>
               {fmt(pkg.salePrice)}<span style={{ fontSize: 11, color: '#9ca3af', fontWeight: 400 }}>/{Number(pkg.childPrice) > 0 ? 'adult' : 'person'}</span>
             </div>
           </div>
           <a
             href={`tel:+${phone}`}
-            style={{ padding: '12px 18px', borderRadius: 999, background: 'linear-gradient(135deg,#e8520a,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}
+            style={{ padding: '12px 18px', borderRadius: 999, background: 'linear-gradient(135deg,#7e5233,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 13, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 6 }}
           >
             <Phone size={14} /> Call
           </a>
