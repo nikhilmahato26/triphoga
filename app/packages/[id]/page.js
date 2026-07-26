@@ -120,7 +120,7 @@ export default function PackagePage({ params }) {
     </main>
   )
 
-  const waMsg = `Hi! I want to book ${pkg.title} (${pkg.id}) — ${pkg.duration} — ${fmt(pkg.salePrice)}/person`
+  const waMsg = `Hi! I want to book ${pkg.title} (${pkg.id}) — ${!isNaN(pkg.duration) && pkg.duration !== '' ? pkg.duration + ' Days' : pkg.duration} — ${fmt(pkg.salePrice)}/person`
 
   const occParts = [
     Number(pkg.rooms) > 0 && `${pkg.rooms} room${Number(pkg.rooms) !== 1 ? 's' : ''}`,
@@ -158,7 +158,7 @@ export default function PackagePage({ params }) {
                 <MapPin size={10} /> {pkg.destination}
               </span>
               <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5, padding: '5px 12px', borderRadius: 999, background: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)', color: '#fff', fontSize: 12, fontWeight: 600 }}>
-                <Clock size={10} /> {pkg.duration}
+                <Clock size={10} /> {!isNaN(pkg.duration) && pkg.duration !== '' ? pkg.duration + ' Days' : pkg.duration}
               </span>
             </div>
             <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.8rem, 5vw, 3.5rem)', color: '#fff', marginBottom: 6, lineHeight: 1.1 }}>

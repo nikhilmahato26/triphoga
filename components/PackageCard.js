@@ -46,7 +46,7 @@ export default function PackageCard({ pkg, phone = '919846034558' }) {
         <div style={{ padding: '18px 20px 20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#9ca3af', fontSize: 12, marginBottom: 8 }}>
             <Clock size={12} />
-            <span>{pkg.duration}</span>
+            <span>{!isNaN(pkg.duration) && pkg.duration !== '' ? pkg.duration + ' Days' : pkg.duration}</span>
           </div>
           <h3 style={{ fontWeight: 700, fontSize: 17, color: '#111827', marginBottom: 4, lineHeight: 1.3 }}>{pkg.title}</h3>
           <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 12 }}>{pkg.subtitle}</p>

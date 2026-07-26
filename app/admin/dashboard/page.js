@@ -10,7 +10,7 @@ import ImageUploader from '@/components/ImageUploader'
 import {
   Plus, Pencil, Copy, Trash2, LogOut, Eye, X, Check, ExternalLink, AlertTriangle,
   Package, MapPin, Inbox, Settings, Phone, MessageCircle, Mail, Calendar,
-  Building2, CheckCircle, XCircle, Star, Home, Ship,
+  Building2, CheckCircle, XCircle, Star, Home, Ship, ImageIcon, Trash,
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
@@ -44,7 +44,7 @@ const STATUS_CONFIG = {
 
 const EMPTY_PKG = {
   id: '', destination: '', badge: '', badgeColor: '#2e9e7a',
-  duration: '3 Days & 2 Nights', title: '', subtitle: '', hotels: '',
+  duration: '3', title: '', subtitle: '', hotels: '',
   adults: '', children: '', rooms: '',
   originalPrice: '', salePrice: '', childPrice: '', childAgeMin: '', childAgeMax: '', priceNote: 'Per Person',
   image: '', heroImage: '', imagePos: '', heroImagePos: '', overview: '', note: '', category: 'package',
@@ -78,6 +78,8 @@ export default function Dashboard() {
   const [enquiries, setEnquiries] = useState([])
   const [agencies, setAgencies] = useState([])
   const [loaded, setLoaded] = useState(false)
+  const [gallery, setGallery] = useState([])
+  const [galleryUploading, setGalleryUploading] = useState(false)
 
   const [section, setSection] = useState('packages')
   const [pkgFilter, setPkgFilter] = useState('all')      // 'all' | 'group' | 'homestay' | 'other'
@@ -161,10 +163,44 @@ export default function Dashboard() {
     } catch {}
   }, [])
 
+  const handleGalleryUpload = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setGalleryUploading(true)
+    const formData = new FormData()
+    formData.append('file', file)
+    try {
+      const res = await fetch('/api/upload', { method: 'POST', body: formData })
+      const data = await res.json()
+      if (data.url) {
+        await fetch('/api/gallery', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ image_url: data.url }) })
+        await fetchGallery()
+        toast.success('Image added to gallery')
+      } else throw new Error()
+    } catch { toast.error('Upload failed') }
+    finally { setGalleryUploading(false) }
+  }
+
+  const handleDeleteGallery = async (id) => {
+    if (!confirm('Delete this image?')) return
+    try {
+      await fetch('/api/gallery?id=' + id, { method: 'DELETE' })
+      await fetchGallery()
+      toast.success('Image deleted')
+    } catch { toast.error('Delete failed') }
+  }
+
   const fetchEnquiries = useCallback(async () => {
     try {
       const res = await fetch('/api/enquiries')
       if (res.ok) setEnquiries(await res.json())
+    } catch {}
+  }, [])
+
+  const fetchGallery = useCallback(async () => {
+    try {
+      const res = await fetch('/api/gallery')
+      if (res.ok) setGallery(await res.json())
     } catch {}
   }, [])
 
@@ -185,13 +221,14 @@ export default function Dashboard() {
   useEffect(() => {
     if (section === 'enquiries') fetchEnquiries()
     if (section === 'agencies') fetchAgencies()
+    if (section === 'gallery') fetchGallery()
     if (section === 'settings') {
       let ignore = false
       fetch('/api/settings').then(r => r.ok ? r.json() : null).then(s => { if (!ignore && s) setSettingsForm({ phone: s.phone || '', whatsapp: s.whatsapp || '', email: s.email || '', email2: s.email2 || '', banner_days: s.banner_days || '30', admin_recovery_email: s.admin_recovery_email || '', min_dest_packages: s.min_dest_packages || '1' }) }).catch(() => {})
       fetch('/api/auth/admin-profile').then(r => r.ok ? r.json() : null).then(d => { if (!ignore && d?.username) { setAdminUsername(d.username); setNewUsername(d.username) } }).catch(() => {})
       return () => { ignore = true }
     }
-  }, [section, fetchEnquiries, fetchAgencies])
+  }, [section, fetchEnquiries, fetchAgencies, fetchGallery])
 
   const destColor = (name) => destinations.find(d => d.name === name)?.color ?? '#9ca3af'
 
@@ -373,14 +410,14 @@ export default function Dashboard() {
   // ─── Destination handlers ──────────────────────────────────────────────────
 
   const handleAddDestination = async () => {
-    if (!newDest.name.trim()) { toast.error('Destination name is required'); return }
+    if (!newDest.name.trim()) { toast.error('Category name is required'); return }
     setDestSaving(true)
     try {
       const res = await fetch('/api/destinations', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(newDest) })
       if (!res.ok) { const { error } = await res.json(); toast.error(error || 'Failed'); return }
       await fetchDestinations()
       setNewDest({ name: '', color: '#7e5233', image_url: '', description: '', emoji: '📍', image_pos: '' })
-      toast.success('Destination added!')
+      toast.success('Category added!')
     } catch { toast.error('Failed to add destination.') }
     finally { setDestSaving(false) }
   }
@@ -390,7 +427,7 @@ export default function Dashboard() {
       const res = await fetch(`/api/destinations/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(editDestForm) })
       if (!res.ok) throw new Error()
       await fetchDestinations(); setEditDestId(null)
-      toast.success('Destination updated!')
+      toast.success('Category updated!')
     } catch { toast.error('Failed to update destination.') }
   }
 
@@ -400,7 +437,7 @@ export default function Dashboard() {
       const res = await fetch(`/api/destinations/${id}/feature`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ featured }) })
       if (!res.ok) throw new Error()
       await fetchDestinations()
-      toast.success(featured ? 'Destination shown on website' : 'Destination hidden from website')
+      toast.success(featured ? 'Category shown on website' : 'Category hidden from website')
     } catch { toast.error('Failed to update destination visibility') }
     finally { setDestVisLoading(null) }
   }
@@ -413,7 +450,7 @@ export default function Dashboard() {
         try {
           await fetch(`/api/destinations/${id}`, { method: 'DELETE' })
           await fetchDestinations()
-          toast.success('Destination deleted')
+          toast.success('Category deleted')
         } catch { toast.error('Failed to delete destination.') }
       },
     })
@@ -670,18 +707,14 @@ export default function Dashboard() {
         {/* Sidebar */}
         <div style={{ width: 250, background: '#fff', borderRight: '1px solid #f3f4f6', height: '100vh', position: 'sticky', top: 0, display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
           <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid #f3f4f6' }}>
-            <div style={{ width: 40, height: 40, overflow: 'hidden', flexShrink: 0 }}>
-              <Image src="/logo.png" alt="Triphoga" width={40} height={40} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: 14, color: '#111', lineHeight: 1 }}>Triphoga Admin</div>
-            </div>
+            <Image src="/logo.png" alt="Triphoga" width={140} height={45} style={{ objectFit: 'contain' }} />
           </div>
           <div style={{ flex: 1, padding: '20px 0', overflowY: 'auto' }}>
             {[
               { key: 'packages',      label: 'Packages',     icon: Package,   badge: pendingCount > 0 ? pendingCount : null },
               { key: 'destinations',  label: 'Categories',   icon: MapPin },
               { key: 'enquiries',     label: 'Enquiries',    icon: Inbox,     badge: enquiries.length > 0 && section !== 'enquiries' ? enquiries.length : null },
+              { key: 'gallery',       label: 'Gallery',      icon: ImageIcon },
               { key: 'settings',      label: 'Settings',     icon: Settings },
             ].map(({ key, label, icon: Icon, badge }) => (
               <button key={key} onClick={() => setSection(key)}
@@ -796,17 +829,10 @@ export default function Dashboard() {
                     <button key={c.value} onClick={() => setPkgFilter(c.value)} style={S.tag(pkgFilter === c.value)}>{c.label}</button>
                   ))}
                 </div>
-                <div style={{ width: 1, height: 24, background: '#e5e7eb', margin: '0 4px' }} />
-                {/* Status filter */}
-                <div style={{ display: 'flex', gap: 6 }}>
-                  {[['all','All','#6b7280'], ['approved','Approved','#22c55e'], ['pending','Pending','#f59e0b'], ['rejected','Rejected','#ef4444']].map(([v, l, c]) => (
-                    <button key={v} onClick={() => setPkgStatus(v)} style={S.tag(pkgStatus === v, c)}>{l}</button>
-                  ))}
-                </div>
               </div>
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={() => { setNewDest({ name: '', color: '#7e5233', image_url: '', description: '', emoji: '📍', image_pos: '' }); setEditDestId(null); setModal('destination') }} style={S.btn('#f3f4f6', '#555')}>
-                  <MapPin size={13} /> Destinations
+                  <MapPin size={13} /> Categories
                 </button>
 <button onClick={openAdd} style={{ padding: '10px 20px', borderRadius: 10, border: 'none', cursor: 'pointer', background: 'linear-gradient(135deg,#7e5233,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 14, display: 'flex', alignItems: 'center', gap: 6 }}>
                   <Plus size={16} /> Add Package
@@ -852,7 +878,7 @@ export default function Dashboard() {
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                     <thead>
                       <tr style={{ background: '#f9fafb', borderBottom: '1px solid #f3f4f6' }}>
-                        {['Pkg ID', 'Package', 'Category', 'Destination', 'Price', 'Status', 'Hero', 'Visible', 'Actions'].map((h, i) => (
+                        {['Pkg ID', 'Package', 'Type', 'Category', 'Price', 'Status', 'Hero', 'Visible', 'Actions'].map((h, i) => (
                           <th key={h} style={{ padding: '10px 16px', textAlign: i >= 6 ? 'center' : 'left', fontWeight: 700, color: '#6b7280', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
                         ))}
                       </tr>
@@ -892,14 +918,7 @@ export default function Dashboard() {
                             <td style={{ padding: '12px 16px' }}>
                               {pkg.status === 'pending' ? (
                                 <div style={{ display: 'flex', gap: 4 }}>
-                                  <button onClick={() => handleApprove(pkg.id, 'approved')} disabled={actionLoading !== null} title="Approve"
-                                    style={{ padding: '4px 10px', borderRadius: 8, border: 'none', background: '#f0fdf4', color: '#22c55e', fontWeight: 700, fontSize: 11, cursor: actionLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, opacity: actionLoading === `approve-${pkg.id}-approved` ? 0.7 : 1 }}>
-                                    {actionLoading === `approve-${pkg.id}-approved` ? <span style={{ width: 10, height: 10, border: '2px solid #bbf7d0', borderTop: '2px solid #22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> : <CheckCircle size={12} />} Approve
-                                  </button>
-                                  <button onClick={() => handleApprove(pkg.id, 'rejected')} disabled={actionLoading !== null} title="Reject"
-                                    style={{ padding: '4px 10px', borderRadius: 8, border: 'none', background: '#fef2f2', color: '#ef4444', fontWeight: 700, fontSize: 11, cursor: actionLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 4, opacity: actionLoading === `approve-${pkg.id}-rejected` ? 0.7 : 1 }}>
-                                    {actionLoading === `approve-${pkg.id}-rejected` ? <span style={{ width: 10, height: 10, border: '2px solid #fecaca', borderTop: '2px solid #ef4444', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> : <XCircle size={12} />} Reject
-                                  </button>
+                                  { /* Package approve/reject removed */ }
                                 </div>
                               ) : (
                                 <span style={{ padding: '3px 10px', borderRadius: 999, fontSize: 11, fontWeight: 700, color: sc.color, background: sc.bg }}>{sc.label}</span>
@@ -981,7 +1000,7 @@ export default function Dashboard() {
           <>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
               <div>
-                <h2 style={{ fontWeight: 700, fontSize: 18, color: '#111', margin: 0 }}>Destinations</h2>
+                <h2 style={{ fontWeight: 700, fontSize: 18, color: '#111', margin: 0 }}>Categories</h2>
                 <p style={{ fontSize: 13, color: '#9ca3af', margin: '4px 0 0' }}>{destinations.length} total · {destinations.filter(d => d.featured !== false).length} shown on website</p>
               </div>
               <button onClick={() => { setNewDest({ name: '', color: '#7e5233', image_url: '', description: '', emoji: '📍', image_pos: '' }); setEditDestId(null); setModal('destination') }} style={S.btn()}>
@@ -992,8 +1011,8 @@ export default function Dashboard() {
             {destinations.length === 0 ? (
               <div style={{ ...S.card, padding: '60px 24px', textAlign: 'center', color: '#9ca3af' }}>
                 <MapPin size={48} style={{ margin: '0 auto 16px', opacity: 0.3 }} />
-                <p style={{ fontWeight: 600, fontSize: 15 }}>No destinations yet</p>
-                <p style={{ fontSize: 13 }}>Add destinations to organise your packages.</p>
+                <p style={{ fontWeight: 600, fontSize: 15 }}>No categories yet</p>
+                <p style={{ fontSize: 13 }}>Add categories to organise your packages.</p>
               </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -1062,13 +1081,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Status filter */}
-            <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-              {[['all','All'],['pending','Pending'],['approved','Approved'],['rejected','Rejected']].map(([v, l]) => (
-                <button key={v} onClick={() => setAgencyFilter(v)} style={S.tag(agencyFilter === v)}>{l}</button>
-              ))}
-            </div>
-
             {filteredAgencies.length === 0 ? (
               <div style={{ ...S.card, padding: '60px 24px', textAlign: 'center', color: '#9ca3af' }}>
                 <Building2 size={48} style={{ margin: '0 auto 16px', opacity: 0.3 }} />
@@ -1117,21 +1129,9 @@ export default function Dashboard() {
                           )}
                         </div>
                         <div style={{ display: 'flex', gap: 6, flexShrink: 0 }}>
-                          {agency.status !== 'approved' && (
-                            <button onClick={() => handleAgencyStatus(agency.id, 'approved')} disabled={actionLoading !== null}
-                              style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#f0fdf4', color: '#22c55e', fontWeight: 700, fontSize: 12, cursor: actionLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 5, opacity: actionLoading === `agency-${agency.id}-approved` ? 0.7 : 1 }}>
-                              {actionLoading === `agency-${agency.id}-approved` ? <span style={{ width: 11, height: 11, border: '2px solid #bbf7d0', borderTop: '2px solid #22c55e', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> : <CheckCircle size={13} />} Approve
-                            </button>
-                          )}
-                          {agency.status !== 'rejected' && (
-                            <button onClick={() => handleAgencyStatus(agency.id, 'rejected')} disabled={actionLoading !== null}
-                              style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#fef2f2', color: '#ef4444', fontWeight: 700, fontSize: 12, cursor: actionLoading ? 'not-allowed' : 'pointer', display: 'flex', alignItems: 'center', gap: 5, opacity: actionLoading === `agency-${agency.id}-rejected` ? 0.7 : 1 }}>
-                              {actionLoading === `agency-${agency.id}-rejected` ? <span style={{ width: 11, height: 11, border: '2px solid #fecaca', borderTop: '2px solid #ef4444', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> : <XCircle size={13} />} Reject
-                            </button>
-                          )}
-                          <button onClick={() => handleDeleteAgency(agency.id, agency.name)}
-                            style={{ width: 32, height: 32, borderRadius: 8, border: '1px solid #fee2e2', background: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#f87171' }}>
-                            <Trash2 size={14} />
+                          <button onClick={() => setDeleteId({ type: 'agency', id: agency.id })}
+                            style={{ padding: '6px 14px', borderRadius: 8, border: 'none', background: '#fef2f2', color: '#dc2626', fontWeight: 700, fontSize: 12, cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 5 }}>
+                            <Trash2 size={13} /> Delete
                           </button>
                         </div>
                       </div>
@@ -1188,6 +1188,43 @@ export default function Dashboard() {
         )}
 
         {/* ── Settings ── */}
+        
+        {section === 'gallery' && (
+          <div style={{ maxWidth: 1000, margin: '0 auto', paddingBottom: 60 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <div>
+                <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111' }}>Gallery Images</h1>
+                <p style={{ color: '#6b7280', fontSize: 14, marginTop: 4 }}>Manage images shown in the landing page gallery section.</p>
+              </div>
+              <div style={{ position: 'relative' }}>
+                <input type="file" accept="image/*" onChange={handleGalleryUpload} disabled={galleryUploading}
+                  style={{ position: 'absolute', inset: 0, opacity: 0, cursor: galleryUploading ? 'not-allowed' : 'pointer' }} />
+                <button disabled={galleryUploading} style={{ ...S.btn('#fbf8f1', '#7e5233'), display: 'flex', alignItems: 'center', gap: 6 }}>
+                  {galleryUploading ? <span style={{ width: 14, height: 14, border: '2px solid #e5dbce', borderTop: '2px solid #7e5233', borderRadius: '50%', animation: 'spin 1s linear infinite' }} /> : <Plus size={16} />}
+                  Add Image
+                </button>
+              </div>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 16 }}>
+              {gallery.map(img => (
+                <div key={img.id} style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                  <img src={img.image_url} alt="Gallery" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <button onClick={() => handleDeleteGallery(img.id)}
+                    style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(255,255,255,0.9)', color: '#ef4444', border: 'none', padding: 6, borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <Trash size={14} />
+                  </button>
+                </div>
+              ))}
+              {gallery.length === 0 && (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px', background: '#fbf8f1', borderRadius: 16, color: '#9ca3af' }}>
+                  No images in gallery yet.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {section === 'settings' && (
           <>
             <div style={{ marginBottom: 24 }}>
@@ -1279,14 +1316,14 @@ export default function Dashboard() {
               </div>
 
               {/* Banner Duration */}
-              {/* Destination Visibility */}
+              {/* Category Visibility */}
               <div style={{ ...S.card, padding: '22px 24px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
                   <div style={{ width: 34, height: 34, borderRadius: 10, background: '#fbf8f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <MapPin size={15} style={{ color: '#7e5233' }} />
                   </div>
                   <div>
-                    <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Destination Visibility</div>
+                    <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Category Visibility</div>
                     <div style={{ fontSize: 11, color: '#9ca3af' }}>Minimum packages required to show a destination on the customer site</div>
                   </div>
                 </div>
@@ -1399,17 +1436,12 @@ export default function Dashboard() {
                     <label style={S.label}>Subtitle</label>
                     <input value={form.subtitle} onChange={e => setForm(f => ({ ...f, subtitle: e.target.value }))} style={S.input} />
                   </div>
-                  <div>
-                    <label style={S.label}>Category *</label>
-                    <select value={form.category} onChange={e => { const cat = e.target.value; setForm(f => ({ ...f, category: cat, ...(!editId && { id: generatePkgId(cat, allPackages) }) })); if (!['homestay','houseboat'].includes(cat)) setTab(t => t === 'stay' ? 'basic' : t) }} style={{ ...S.input, cursor: 'pointer' }}>
-                      {CATEGORIES.map(c => <option key={c.value} value={c.value}>{c.label}</option>)}
-                    </select>
-                  </div>
+                  
                   {(() => {
                     const isHS = form.category === 'homestay'
                     const isHB = form.category === 'houseboat'
                     const optionList = isHS ? homestays : isHB ? houseboats : destinations
-                    const fieldLabel = isHS ? 'Homestay' : isHB ? 'Houseboat' : 'Destination'
+                    const fieldLabel = isHS ? 'Homestay' : isHB ? 'Houseboat' : 'Category'
                     return (
                       <div>
                         <label style={S.label}>{fieldLabel}</label>
@@ -1422,7 +1454,7 @@ export default function Dashboard() {
                   })()}
                   <div>
                     <label style={S.label}>Duration</label>
-                    <input value={form.duration} onChange={e => setForm(f => ({ ...f, duration: e.target.value }))} style={S.input} placeholder="e.g. 3 Days & 2 Nights" />
+                    <input type="number" value={form.duration} onChange={e => setForm(f => ({ ...f, duration: e.target.value }))} style={S.input} placeholder="e.g. 3" min="1" />
                   </div>
                   <div>
                     <label style={S.label}>Stay / Hotels</label>
@@ -1647,13 +1679,13 @@ export default function Dashboard() {
         <div style={{ ...S.overlay, alignItems: 'center' }} onClick={e => e.target === e.currentTarget && setModal(null)}>
           <div style={{ background: '#fff', borderRadius: 20, width: '100%', maxWidth: 500, boxShadow: '0 20px 60px rgba(0,0,0,0.2)', overflow: 'hidden', maxHeight: '90vh', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 20px', background: 'linear-gradient(135deg,#153e2d,#1c2575)', flexShrink: 0 }}>
-              <h2 style={{ fontWeight: 700, fontSize: 16, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}><MapPin size={16} /> Manage Destinations</h2>
+              <h2 style={{ fontWeight: 700, fontSize: 16, color: '#fff', display: 'flex', alignItems: 'center', gap: 8 }}><MapPin size={16} /> Manage Categories</h2>
               <button onClick={() => setModal(null)} style={{ width: 30, height: 30, borderRadius: '50%', background: 'rgba(255,255,255,0.2)', border: 'none', cursor: 'pointer', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}><X size={15} /></button>
             </div>
             <div style={{ padding: 20, overflowY: 'auto', flex: 1 }}>
               {destinations.length > 0 && (
                 <div style={{ marginBottom: 24 }}>
-                  <label style={S.label}>Existing Destinations</label>
+                  <label style={S.label}>Existing Categories</label>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                     {destinations.map(d => (
                       <div key={d.id} style={{ borderRadius: 12, border: '1px solid #f3f4f6', background: '#fafafa', overflow: 'hidden' }}>

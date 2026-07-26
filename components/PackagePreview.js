@@ -44,7 +44,7 @@ export default function PackagePreview({ pkg }) {
       <div style={{ marginTop: 16 }}>
         {pkg.duration && (
           <div style={{ display: 'flex', alignItems: 'center', gap: 5, color: '#9ca3af', fontSize: 12, marginBottom: 6 }}>
-            <Clock size={12} /> {pkg.duration}
+            <Clock size={12} /> {!isNaN(pkg.duration) && pkg.duration !== '' ? pkg.duration + ' Days' : pkg.duration}
           </div>
         )}
         <h2 style={{ fontWeight: 800, fontSize: 22, lineHeight: 1.25, color: '#111' }}>{pkg.title || 'Untitled package'}</h2>

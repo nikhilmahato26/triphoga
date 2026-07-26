@@ -89,6 +89,7 @@ export default function HomePage() {
   const [houseboats, setHouseboats] = useState([])
   const [showAllHS, setShowAllHS] = useState(false)
   const [showAllHB, setShowAllHB] = useState(false)
+  const [gallery, setGallery] = useState([])
   const { packages, loaded: pkgsLoaded } = usePackages()
   const phone = usePhone()
   const whatsapp = useWhatsapp()
@@ -106,6 +107,10 @@ export default function HomePage() {
     fetch('/api/listings?type=houseboat')
       .then(r => r.ok ? r.json() : [])
       .then(setHouseboats)
+      .catch(() => {})
+    fetch('/api/gallery')
+      .then(r => r.ok ? r.json() : [])
+      .then(setGallery)
       .catch(() => {})
   }, [])
 
@@ -305,17 +310,10 @@ export default function HomePage() {
           </div>
           
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
-            {[
-              "https://images.unsplash.com/photo-1593693397690-362cb96667a0?q=80&w=800",
-              "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?q=80&w=800",
-              "https://images.unsplash.com/photo-1589983846997-04788035bc83?q=80&w=800",
-              "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800",
-              "https://images.unsplash.com/photo-1548013146-72479768bada?q=80&w=800",
-              "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=800"
-            ].map((src, idx) => (
-              <div key={idx} style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+            {gallery.map((img, idx) => (
+              <div key={img.id || idx} style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
                 <img 
-                  src={src} 
+                  src={img.image_url} 
                   alt={`Gallery image ${idx + 1}`} 
                   style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s cursor-pointer' }} 
                   onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}

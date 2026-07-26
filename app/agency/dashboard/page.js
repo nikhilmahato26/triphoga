@@ -35,7 +35,7 @@ const CATEGORIES = [
 
 const EMPTY_PKG = {
   id: '', destination: '', badge: '', badgeColor: '#2e9e7a',
-  duration: '3 Days & 2 Nights', title: '', subtitle: '', hotels: '',
+  duration: '3', title: '', subtitle: '', hotels: '',
   adults: '', children: '', rooms: '',
   originalPrice: '', salePrice: '', childPrice: '', childAgeMin: '', childAgeMax: '', priceNote: 'Per Person',
   image: '', heroImage: '', imagePos: '', heroImagePos: '', overview: '', note: '', category: 'package',
@@ -489,7 +489,7 @@ export default function AgencyDashboard() {
                   </div>
                   <div>
                     <label style={S.label}>Duration</label>
-                    <input value={form.duration} onChange={e => setForm(f => ({ ...f, duration: e.target.value }))} style={S.input} placeholder="e.g. 3 Days & 2 Nights" />
+                    <input type="number" value={form.duration} onChange={e => setForm(f => ({ ...f, duration: e.target.value }))} style={S.input} placeholder="e.g. 3" min="1" />
                   </div>
                   <div>
                     <label style={S.label}>Stay / Hotels</label>
