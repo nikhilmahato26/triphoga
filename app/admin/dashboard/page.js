@@ -28,13 +28,7 @@ function generatePkgId(category, existingPackages) {
 }
 function fmtDate(ts) { return new Date(ts).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) }
 
-const CATEGORIES = [
-  { value: 'package',  label: 'Package' },
-  { value: 'group',    label: 'Group Package' },
-  { value: 'homestay', label: 'Home Stay' },
-  { value: 'houseboat', label: 'Houseboat' },
-  { value: 'other',    label: 'Other' },
-]
+
 
 const STATUS_CONFIG = {
   pending:  { label: 'Pending',   color: '#f59e0b', bg: '#fffbeb' },
@@ -577,7 +571,7 @@ export default function Dashboard() {
   const uniquePkgAgencies = [...new Set(allPackages.map(p => p.agencyName).filter(Boolean))].sort()
 
   const filteredPackages = allPackages
-    .filter(p => pkgFilter === 'all' || p.category === pkgFilter)
+    .filter(p => pkgFilter === 'all' || p.destination === pkgFilter)
     .filter(p => pkgStatus === 'all' || p.status === pkgStatus)
     .filter(p => pkgAgencyFilter === 'all' || p.agencyName === pkgAgencyFilter)
     .filter(p => !pkgSearch.trim() || p.id.toLowerCase().includes(pkgSearch.toLowerCase()) || (p.title || '').toLowerCase().includes(pkgSearch.toLowerCase()))
@@ -707,7 +701,7 @@ export default function Dashboard() {
         {/* Sidebar */}
         <div style={{ width: 250, background: '#fff', borderRight: '1px solid #f3f4f6', height: '100vh', position: 'sticky', top: 0, display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
           <div style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: '1px solid #f3f4f6' }}>
-            <Image src="/logo.png" alt="Triphoga" width={140} height={45} style={{ objectFit: 'contain' }} />
+            <Image src="/triphoga-logo.png" alt="Triphoga" width={140} height={45} style={{ objectFit: 'contain' }} />
           </div>
           <div style={{ flex: 1, padding: '20px 0', overflowY: 'auto' }}>
             {[
@@ -825,8 +819,8 @@ export default function Dashboard() {
                 {/* Category filter */}
                 <div style={{ display: 'flex', gap: 6 }}>
                   <button onClick={() => setPkgFilter('all')} style={S.tag(pkgFilter === 'all')}>All</button>
-                  {CATEGORIES.map(c => (
-                    <button key={c.value} onClick={() => setPkgFilter(c.value)} style={S.tag(pkgFilter === c.value)}>{c.label}</button>
+                  {destinations.map(d => (
+                    <button key={d.name} onClick={() => setPkgFilter(d.name)} style={S.tag(pkgFilter === d.name)}>{d.name}</button>
                   ))}
                 </div>
               </div>
@@ -878,15 +872,14 @@ export default function Dashboard() {
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
                     <thead>
                       <tr style={{ background: '#f9fafb', borderBottom: '1px solid #f3f4f6' }}>
-                        {['Pkg ID', 'Package', 'Type', 'Category', 'Price', 'Status', 'Hero', 'Visible', 'Actions'].map((h, i) => (
-                          <th key={h} style={{ padding: '10px 16px', textAlign: i >= 6 ? 'center' : 'left', fontWeight: 700, color: '#6b7280', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
+                        {['Pkg ID', 'Package', 'Category', 'Price', 'Status', 'Hero', 'Visible', 'Actions'].map((h, i) => (
+                          <th key={h} style={{ padding: '10px 16px', textAlign: i >= 5 ? 'center' : 'left', fontWeight: 700, color: '#6b7280', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
                         ))}
                       </tr>
                     </thead>
                     <tbody>
                       {filteredPackages.map((pkg, idx) => {
                         const sc = STATUS_CONFIG[pkg.status] || STATUS_CONFIG.pending
-                        const cat = CATEGORIES.find(c => c.value === pkg.category)
                         return (
                           <tr key={pkg.id} style={{ borderBottom: idx < filteredPackages.length - 1 ? '1px solid #f9fafb' : 'none', opacity: pkg.hidden ? 0.55 : 1 }}
                             onMouseEnter={e => e.currentTarget.style.background = '#fafafa'}
@@ -905,9 +898,6 @@ export default function Dashboard() {
                                   {pkg.agencyName && <div style={{ fontSize: 10, color: '#7e5233', marginTop: 1, fontWeight: 600 }}>🏢 {pkg.agencyName}</div>}
                                 </div>
                               </div>
-                            </td>
-                            <td style={{ padding: '12px 16px' }}>
-                              <span style={{ fontSize: 11, color: '#6b7280', fontWeight: 600 }}>{cat?.label || pkg.category}</span>
                             </td>
                             <td style={{ padding: '12px 16px' }}>
                               <span style={{ padding: '2px 8px', borderRadius: 999, fontSize: 11, fontWeight: 600, color: '#fff', background: pkg.badgeColor || destColor(pkg.destination) }}>{pkg.destination || '—'}</span>
