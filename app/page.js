@@ -4,7 +4,6 @@ import Navbar from '@/components/Navbar'
 import HeroSlider from '@/components/HeroSlider'
 import AboutSection from '@/components/AboutSection'
 import FeaturesStrip from '@/components/FeaturesStrip'
-import FleetSummarySection from '@/components/FleetSummarySection'
 import FleetSection from '@/components/FleetSection'
 import ContactSection from '@/components/ContactSection'
 import PackageCard from '@/components/PackageCard'
@@ -90,6 +89,7 @@ export default function HomePage() {
   const [showAllHS, setShowAllHS] = useState(false)
   const [showAllHB, setShowAllHB] = useState(false)
   const [gallery, setGallery] = useState([])
+  const [testimonials, setTestimonials] = useState([])
   const { packages, loaded: pkgsLoaded } = usePackages()
   const phone = usePhone()
   const whatsapp = useWhatsapp()
@@ -111,6 +111,10 @@ export default function HomePage() {
     fetch('/api/gallery')
       .then(r => r.ok ? r.json() : [])
       .then(setGallery)
+      .catch(() => {})
+    fetch('/api/testimonials')
+      .then(r => r.ok ? r.json() : [])
+      .then(setTestimonials)
       .catch(() => {})
   }, [])
 
@@ -263,36 +267,34 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ── */}
-      <section id="testimonials" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
-              What They Say
-            </p>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
-              Client <span style={{ color: '#7e5233' }}>Testimonials</span>
-            </h2>
-            <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
-              Real stories from our happy travellers.
-            </p>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
-            {[
-              { name: 'Anjali Sharma', text: 'Triphoga arranged the most beautiful Munnar trip for us. The itinerary was perfectly balanced and the homestay was breathtaking!' },
-              { name: 'Rahul Verma', text: 'Our houseboat experience in Alleppey was magical. The team took care of every single detail. Highly recommend their services.' },
-              { name: 'Sarah Jenkins', text: 'A completely hassle-free spiritual tour across Kerala. The guides were knowledgeable and everything went extremely smoothly.' }
-            ].map((t, idx) => (
-              <div key={idx} style={{ background: '#fff', padding: 32, borderRadius: 20, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
-                  {[...Array(5)].map((_, i) => <Star key={i} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
+      {testimonials.length > 0 && (
+        <section id="testimonials" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
+                What They Say
+              </p>
+              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+                Client <span style={{ color: '#7e5233' }}>Testimonials</span>
+              </h2>
+              <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
+                Real stories from our happy travellers.
+              </p>
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+              {testimonials.map((t, idx) => (
+                <div key={idx} style={{ background: '#fff', padding: 32, borderRadius: 20, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
+                  <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
+                    {[...Array(5)].map((_, i) => <Star key={i} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
+                  </div>
+                  <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.6, fontStyle: 'italic', marginBottom: 24 }}>&quot;{t.text}&quot;</p>
+                  <div style={{ fontWeight: 700, color: '#111', fontSize: 15 }}>- {t.name}</div>
                 </div>
-                <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.6, fontStyle: 'italic', marginBottom: 24 }}>&quot;{t.text}&quot;</p>
-                <div style={{ fontWeight: 700, color: '#111', fontSize: 15 }}>- {t.name}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ── Gallery ── */}
       <section id="gallery" style={{ padding: '80px 24px', background: '#fff' }}>
@@ -326,7 +328,6 @@ export default function HomePage() {
       </section>
 
       <FleetSection phone={phone} />
-      <FleetSummarySection />
       <ContactSection phone={phone} email={email} whatsapp={whatsapp} />
 
       <Footer />

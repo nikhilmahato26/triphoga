@@ -74,6 +74,10 @@ export default function Dashboard() {
   const [loaded, setLoaded] = useState(false)
   const [gallery, setGallery] = useState([])
   const [galleryUploading, setGalleryUploading] = useState(false)
+  const [testimonials, setTestimonials] = useState([])
+  const [testimonialModal, setTestimonialModal] = useState(null)
+  const [testimonialForm, setTestimonialForm] = useState({ name: '', text: '' })
+  const [testimonialSaving, setTestimonialSaving] = useState(false)
 
   const [section, setSection] = useState('packages')
   const [pkgFilter, setPkgFilter] = useState('all')      // 'all' | 'group' | 'homestay' | 'other'
@@ -198,6 +202,13 @@ export default function Dashboard() {
     } catch {}
   }, [])
 
+  const fetchTestimonials = useCallback(async () => {
+    try {
+      const res = await fetch('/api/testimonials')
+      if (res.ok) setTestimonials(await res.json())
+    } catch {}
+  }, [])
+
   const fetchAgencies = useCallback(async () => {
     try {
       const res = await fetch('/api/agencies')
@@ -216,13 +227,14 @@ export default function Dashboard() {
     if (section === 'enquiries') fetchEnquiries()
     if (section === 'agencies') fetchAgencies()
     if (section === 'gallery') fetchGallery()
+    if (section === 'testimonials') fetchTestimonials()
     if (section === 'settings') {
       let ignore = false
       fetch('/api/settings').then(r => r.ok ? r.json() : null).then(s => { if (!ignore && s) setSettingsForm({ phone: s.phone || '', whatsapp: s.whatsapp || '', email: s.email || '', email2: s.email2 || '', banner_days: s.banner_days || '30', admin_recovery_email: s.admin_recovery_email || '', min_dest_packages: s.min_dest_packages || '1' }) }).catch(() => {})
       fetch('/api/auth/admin-profile').then(r => r.ok ? r.json() : null).then(d => { if (!ignore && d?.username) { setAdminUsername(d.username); setNewUsername(d.username) } }).catch(() => {})
       return () => { ignore = true }
     }
-  }, [section, fetchEnquiries, fetchAgencies, fetchGallery])
+  }, [section, fetchEnquiries, fetchAgencies, fetchGallery, fetchTestimonials])
 
   const destColor = (name) => destinations.find(d => d.name === name)?.color ?? '#9ca3af'
 
@@ -708,6 +720,7 @@ export default function Dashboard() {
               { key: 'packages',      label: 'Packages',     icon: Package,   badge: pendingCount > 0 ? pendingCount : null },
               { key: 'destinations',  label: 'Categories',   icon: MapPin },
               { key: 'enquiries',     label: 'Enquiries',    icon: Inbox,     badge: enquiries.length > 0 && section !== 'enquiries' ? enquiries.length : null },
+              { key: 'testimonials',  label: 'Testimonials', icon: MessageCircle },
               { key: 'gallery',       label: 'Gallery',      icon: ImageIcon },
               { key: 'settings',      label: 'Settings',     icon: Settings },
             ].map(({ key, label, icon: Icon, badge }) => (
@@ -1179,6 +1192,49 @@ export default function Dashboard() {
 
         {/* ── Settings ── */}
         
+        {section === 'testimonials' && (
+          <div style={{ maxWidth: 1000, margin: '0 auto', paddingBottom: 60 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
+              <div>
+                <h1 style={{ fontSize: 24, fontWeight: 800, color: '#111' }}>Testimonials</h1>
+                <p style={{ color: '#6b7280', fontSize: 14, marginTop: 4 }}>Manage client testimonials displayed on the homepage.</p>
+              </div>
+              <button onClick={() => { setTestimonialModal('add'); setTestimonialForm({ name: '', text: '' }) }} style={{ ...S.btn('#fbf8f1', '#7e5233'), display: 'flex', alignItems: 'center', gap: 6 }}>
+                <Plus size={16} /> Add Testimonial
+              </button>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+              {testimonials.map(t => (
+                <div key={t.id} style={{ ...S.card, padding: 24, position: 'relative' }}>
+                  <div style={{ fontWeight: 700, fontSize: 16, marginBottom: 8, color: '#111' }}>{t.name}</div>
+                  <p style={{ fontSize: 14, color: '#555', lineHeight: 1.6, marginBottom: 16 }}>&quot;{t.text}&quot;</p>
+                  <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end', borderTop: '1px solid #f3f4f6', paddingTop: 12 }}>
+                    <button onClick={() => { setTestimonialModal('edit'); setTestimonialForm(t) }} style={{ ...S.btn('#f3f4f6', '#555'), padding: '6px 12px' }}>
+                      <Pencil size={14} /> Edit
+                    </button>
+                    <button onClick={async () => {
+                      if (!confirm('Delete this testimonial?')) return
+                      try {
+                        await fetch('/api/testimonials?id=' + t.id, { method: 'DELETE' })
+                        fetchTestimonials()
+                        toast.success('Testimonial deleted')
+                      } catch { toast.error('Failed to delete') }
+                    }} style={{ ...S.btn('#fef2f2', '#dc2626'), padding: '6px 12px' }}>
+                      <Trash size={14} /> Delete
+                    </button>
+                  </div>
+                </div>
+              ))}
+              {testimonials.length === 0 && (
+                <div style={{ gridColumn: '1 / -1', textAlign: 'center', padding: '60px 20px', background: '#fbf8f1', borderRadius: 16, color: '#9ca3af' }}>
+                  No testimonials found.
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
         {section === 'gallery' && (
           <div style={{ maxWidth: 1000, margin: '0 auto', paddingBottom: 60 }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
@@ -1892,6 +1948,49 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+      {/* ── Testimonial Modal ── */}
+      {testimonialModal && (
+        <div style={S.modalOverlay}>
+          <div style={{ ...S.modal, maxWidth: 500 }}>
+            <div style={S.modalHeader}>
+              <h2 style={{ fontSize: 20, fontWeight: 800, margin: 0 }}>{testimonialModal === 'add' ? 'Add' : 'Edit'} Testimonial</h2>
+              <button onClick={() => setTestimonialModal(null)} style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#9ca3af' }}><X size={24} /></button>
+            </div>
+            <div style={S.modalBody}>
+              <div style={S.formGroup}>
+                <label style={S.label}>Client Name *</label>
+                <input value={testimonialForm.name || ''} onChange={e => setTestimonialForm({ ...testimonialForm, name: e.target.value })} style={S.input} placeholder="e.g. John Doe" />
+              </div>
+              <div style={S.formGroup}>
+                <label style={S.label}>Testimonial *</label>
+                <textarea value={testimonialForm.text || ''} onChange={e => setTestimonialForm({ ...testimonialForm, text: e.target.value })} style={{ ...S.input, minHeight: 120 }} placeholder="What they said..." />
+              </div>
+            </div>
+            <div style={S.modalFooter}>
+              <button onClick={() => setTestimonialModal(null)} style={S.btn('#f3f4f6', '#4b5563')}>Cancel</button>
+              <button disabled={testimonialSaving || !testimonialForm.name || !testimonialForm.text} onClick={async () => {
+                setTestimonialSaving(true)
+                try {
+                  const method = testimonialModal === 'add' ? 'POST' : 'PUT'
+                  const res = await fetch('/api/testimonials', {
+                    method, headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testimonialForm)
+                  })
+                  if (res.ok) {
+                    toast.success(testimonialModal === 'add' ? 'Testimonial added' : 'Testimonial updated')
+                    setTestimonialModal(null)
+                    fetchTestimonials()
+                  } else throw new Error()
+                } catch { toast.error('Failed to save testimonial') }
+                finally { setTestimonialSaving(false) }
+              }} style={S.btn('#7e5233', '#fff')}>
+                {testimonialSaving ? 'Saving...' : 'Save Testimonial'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }
