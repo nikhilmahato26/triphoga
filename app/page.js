@@ -8,6 +8,8 @@ import FleetSection from '@/components/FleetSection'
 import ContactSection from '@/components/ContactSection'
 import PackageCard from '@/components/PackageCard'
 import Footer from '@/components/Footer'
+import ClientsMarquee from '@/components/ClientsMarquee'
+import TeamSection from '@/components/TeamSection'
 import { usePackages } from '@/hooks/usePackages'
 import { usePhone, useWhatsapp, useEmail, useEmail2 } from '@/hooks/useSettings'
 import {
@@ -327,6 +329,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      <ClientsMarquee />
+      <TeamSection />
+      
       <FleetSection phone={phone} />
       <ContactSection phone={phone} email={email} whatsapp={whatsapp} />
 

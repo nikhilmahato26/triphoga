@@ -7,10 +7,12 @@ import TagSelector from '@/components/TagSelector'
 import PackagePreview from '@/components/PackagePreview'
 import HomestayFields from '@/components/HomestayFields'
 import ImageUploader from '@/components/ImageUploader'
+import ClientsAdmin from '@/components/ClientsAdmin'
+import TeamAdmin from '@/components/TeamAdmin'
 import {
   Plus, Pencil, Copy, Trash2, LogOut, Eye, X, Check, ExternalLink, AlertTriangle,
   Package, MapPin, Inbox, Settings, Phone, MessageCircle, Mail, Calendar,
-  Building2, CheckCircle, XCircle, Star, Home, Ship, ImageIcon, Trash,
+  Building2, CheckCircle, XCircle, Star, Home, Ship, ImageIcon, Trash, Users
 } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
@@ -722,6 +724,8 @@ export default function Dashboard() {
               { key: 'enquiries',     label: 'Enquiries',    icon: Inbox,     badge: enquiries.length > 0 && section !== 'enquiries' ? enquiries.length : null },
               { key: 'testimonials',  label: 'Testimonials', icon: MessageCircle },
               { key: 'gallery',       label: 'Gallery',      icon: ImageIcon },
+              { key: 'clients',       label: 'Clients',      icon: Building2 },
+              { key: 'team',          label: 'Team',         icon: Users },
               { key: 'settings',      label: 'Settings',     icon: Settings },
             ].map(({ key, label, icon: Icon, badge }) => (
               <button key={key} onClick={() => setSection(key)}
@@ -1270,6 +1274,9 @@ export default function Dashboard() {
             </div>
           </div>
         )}
+
+        {section === 'clients' && <ClientsAdmin />}
+        {section === 'team' && <TeamAdmin />}
 
         {section === 'settings' && (
           <>
