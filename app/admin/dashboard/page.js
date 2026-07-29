@@ -766,8 +766,6 @@ export default function Dashboard() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: 12, marginBottom: 24 }}>
               {[
                 { label: 'Total', value: allPackages.length, color: '#111' },
-                { label: 'Approved', value: allPackages.filter(p => p.status === 'approved').length, color: '#22c55e' },
-                { label: 'Pending', value: pendingCount, color: '#f59e0b' },
                 { label: 'Featured', value: featuredPackages.length, color: '#7e5233' },
               ].map(({ label, value, color }) => (
                 <div key={label} style={{ background: '#fff', borderRadius: 14, padding: '16px 18px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', border: '1px solid #f3f4f6' }}>

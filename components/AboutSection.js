@@ -1,7 +1,24 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { Star, Clock, Shield, Users } from 'lucide-react'
 
 export default function AboutSection() {
+  const [team, setTeam] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetch('/api/team')
+      .then(res => res.ok ? res.json() : [])
+      .then(data => {
+        setTeam(data)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Error fetching team:', err)
+        setLoading(false)
+      })
+  }, [])
+
   return (
     <section id="about" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -44,22 +61,40 @@ export default function AboutSection() {
             
             {/* Leadership Team */}
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12 }}>
-              {/* Founder */}
-              <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
-                  <img src="https://ui-avatars.com/api/?name=Priyanshu+Nagpal&background=153e2d&color=fff" alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Priyanshu Nagpal</h4>
-                <p style={{ fontSize: 12, color: '#153e2d', fontWeight: 600, margin: '2px 0 0' }}>Founder</p>
-              </div>
-              {/* Co-founder */}
-              <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
-                  <img src="https://ui-avatars.com/api/?name=Harsimran&background=fbbf24&color=fff" alt="Co-founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Harsimran</h4>
-                <p style={{ fontSize: 12, color: '#fbbf24', fontWeight: 600, margin: '2px 0 0' }}>Co-founder</p>
-              </div>
+              {loading ? (
+                <>
+                  <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, height: 160, animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                  <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, height: 160, animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                </>
+              ) : team.length > 0 ? (
+                team.map(member => (
+                  <div key={member.id} style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                    <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
+                      <img src={member.image_url} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>{member.name}</h4>
+                    <p style={{ fontSize: 12, color: '#7e5233', fontWeight: 600, margin: '2px 0 0' }}>{member.role}</p>
+                  </div>
+                ))
+              ) : (
+                <>
+                  {/* Fallback */}
+                  <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                    <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
+                      <img src="https://ui-avatars.com/api/?name=Priyanshu+Nagpal&background=153e2d&color=fff" alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Priyanshu Nagpal</h4>
+                    <p style={{ fontSize: 12, color: '#153e2d', fontWeight: 600, margin: '2px 0 0' }}>Founder</p>
+                  </div>
+                  <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
+                    <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
+                      <img src="https://ui-avatars.com/api/?name=Harsimran&background=fbbf24&color=fff" alt="Co-founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Harsimran</h4>
+                    <p style={{ fontSize: 12, color: '#fbbf24', fontWeight: 600, margin: '2px 0 0' }}>Co-founder</p>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
