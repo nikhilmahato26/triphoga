@@ -142,8 +142,9 @@ export default function ContactSection({ phone, email, whatsapp }) {
                   <div>
                     <div style={{ fontSize: 12, fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Office Address</div>
                     <div style={{ fontSize: 15, color: '#4b5563', marginTop: 4, lineHeight: 1.5 }}>
-                      Trip Hoga<br/>
-                      Kerala, India
+                      TripHoga<br/>
+                      239, Vivek vihar, Ranipur mor,<br/>
+                      Haridwar-249401
                     </div>
                   </div>
                 </div>
@@ -153,7 +154,7 @@ export default function ContactSection({ phone, email, whatsapp }) {
             {/* Embedded Google Map */}
             <div style={{ flex: 1, borderRadius: 24, overflow: 'hidden', boxShadow: '0 8px 30px rgba(0,0,0,0.06)', minHeight: 250, background: '#e5e7eb' }}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4013098.8188147647!2d76.22340795000001!3d10.53696805!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0812ffd49c7e2b%3A0x64b737bb6746ef92!2sKerala!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=239,Vivek+vihar,+Ranipur+mor,+Haridwar-249401&t=&z=13&ie=UTF8&iwloc=&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}

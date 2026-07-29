@@ -44,28 +44,20 @@ export default function AboutSection() {
             
             {/* Leadership Team */}
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginTop: 12 }}>
-              {/* Mentor */}
-              <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
-                  <img src="https://ui-avatars.com/api/?name=Mentor&background=7e5233&color=fff" alt="Mentor" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>John Doe</h4>
-                <p style={{ fontSize: 12, color: '#7e5233', fontWeight: 600, margin: '2px 0 0' }}>Mentor</p>
-              </div>
               {/* Founder */}
               <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
-                  <img src="https://ui-avatars.com/api/?name=Founder&background=153e2d&color=fff" alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src="https://ui-avatars.com/api/?name=Priyanshu+Nagpal&background=153e2d&color=fff" alt="Founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Jane Smith</h4>
+                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Priyanshu Nagpal</h4>
                 <p style={{ fontSize: 12, color: '#153e2d', fontWeight: 600, margin: '2px 0 0' }}>Founder</p>
               </div>
               {/* Co-founder */}
               <div style={{ flex: '1 1 140px', background: '#fff', borderRadius: 16, padding: 16, textAlign: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
                 <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#f3f4f6', margin: '0 auto 12px', overflow: 'hidden' }}>
-                  <img src="https://ui-avatars.com/api/?name=Co-founder&background=fbbf24&color=fff" alt="Co-founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src="https://ui-avatars.com/api/?name=Harsimran&background=fbbf24&color=fff" alt="Co-founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Mike Johnson</h4>
+                <h4 style={{ fontWeight: 700, fontSize: 14, color: '#111', margin: 0 }}>Harsimran</h4>
                 <p style={{ fontSize: 12, color: '#fbbf24', fontWeight: 600, margin: '2px 0 0' }}>Co-founder</p>
               </div>
             </div>

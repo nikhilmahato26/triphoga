@@ -44,3 +44,11 @@ export function useEmail() {
 export function useEmail2() {
   return useSettings().email2 || ''
 }
+
+export function useFacebook() {
+  return useSettings().facebook_url || 'https://facebook.com/share/1CPWAyox1N/?ref=1'
+}
+
+export function useInstagram() {
+  return useSettings().instagram_url || 'https://www.instagram.com/greenkeralatrips?igsh=MXU3aG9rbmg0bHVvNw=='
+}

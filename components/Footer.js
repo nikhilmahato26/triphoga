@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Phone, Mail, MessageCircle, MapPin } from 'lucide-react'
-import { usePhone, useWhatsapp, useEmail, useEmail2 } from '@/hooks/useSettings'
+import { usePhone, useWhatsapp, useEmail, useEmail2, useFacebook, useInstagram } from '@/hooks/useSettings'
 
 function IgIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
 }
 function FbIcon() {
-  return <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
 }
 
 export default function Footer() {
@@ -17,6 +17,8 @@ export default function Footer() {
   const whatsapp = useWhatsapp()
   const email = useEmail()
   const email2 = useEmail2()
+  const facebook = useFacebook()
+  const instagram = useInstagram()
   const [footerDests, setFooterDests] = useState([])
 
   useEffect(() => {
@@ -38,9 +40,9 @@ export default function Footer() {
             </div>
             <p className="text-sm leading-relaxed mb-4" style={{ color:'#4b5563' }}>Curated travel experiences with day-wise itineraries and personal support.</p>
             <div className="flex gap-3">
-              <a href="https://www.instagram.com/greenkeralatrips?igsh=MXU3aG9rbmg0bHVvNw==" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><IgIcon/></a>
-              <a href="https://facebook.com/share/1CPWAyox1N/?ref=1" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><FbIcon/></a>
-              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full flex items-center justify-center text-gray-700" style={{ background:'rgba(0,0,0,0.05)' }}><MessageCircle size={16}/></a>
+              <a href={instagram} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full flex items-center justify-center text-gray-700 transition hover:bg-orange-100" style={{ background:'rgba(0,0,0,0.05)' }}><IgIcon/></a>
+              <a href={facebook} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full flex items-center justify-center text-gray-700 transition hover:bg-orange-100" style={{ background:'rgba(0,0,0,0.05)' }}><FbIcon/></a>
+              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full flex items-center justify-center text-gray-700 transition hover:bg-orange-100" style={{ background:'rgba(0,0,0,0.05)' }}><MessageCircle size={22}/></a>
             </div>
           </div>
 

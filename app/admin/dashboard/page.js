@@ -118,7 +118,7 @@ export default function Dashboard() {
   const [listingVisLoading, setListingVisLoading] = useState(null)
   const [editListingId, setEditListingId] = useState(null)
   const [editListingForm, setEditListingForm] = useState({ color: '#7e5233', image_url: '', description: '', location: '', price: '', emoji: '🏡', image_pos: '' })
-  const [settingsForm, setSettingsForm] = useState({ phone: '', whatsapp: '', email: '', email2: '', banner_days: '30', admin_recovery_email: '', min_dest_packages: '1' })
+  const [settingsForm, setSettingsForm] = useState({ phone: '', whatsapp: '', email: '', email2: '', facebook_url: '', instagram_url: '', banner_days: '30', admin_recovery_email: '', min_dest_packages: '1' })
   const [settingsSaving, setSettingsSaving] = useState(false)
   const [adminUsername, setAdminUsername] = useState('')
   const [newUsername, setNewUsername] = useState('')
@@ -232,7 +232,7 @@ export default function Dashboard() {
     if (section === 'testimonials') fetchTestimonials()
     if (section === 'settings') {
       let ignore = false
-      fetch('/api/settings').then(r => r.ok ? r.json() : null).then(s => { if (!ignore && s) setSettingsForm({ phone: s.phone || '', whatsapp: s.whatsapp || '', email: s.email || '', email2: s.email2 || '', banner_days: s.banner_days || '30', admin_recovery_email: s.admin_recovery_email || '', min_dest_packages: s.min_dest_packages || '1' }) }).catch(() => {})
+      fetch('/api/settings').then(r => r.ok ? r.json() : null).then(s => { if (!ignore && s) setSettingsForm({ phone: s.phone || '', whatsapp: s.whatsapp || '', email: s.email || '', email2: s.email2 || '', facebook_url: s.facebook_url || '', instagram_url: s.instagram_url || '', banner_days: s.banner_days || '30', admin_recovery_email: s.admin_recovery_email || '', min_dest_packages: s.min_dest_packages || '1' }) }).catch(() => {})
       fetch('/api/auth/admin-profile').then(r => r.ok ? r.json() : null).then(d => { if (!ignore && d?.username) { setAdminUsername(d.username); setNewUsername(d.username) } }).catch(() => {})
       return () => { ignore = true }
     }
@@ -537,6 +537,8 @@ export default function Dashboard() {
         whatsapp: (settingsForm.whatsapp.trim() || settingsForm.phone.trim()).replace(/\D/g, ''),
         email: settingsForm.email.trim(),
         email2: settingsForm.email2.trim(),
+        facebook_url: settingsForm.facebook_url.trim(),
+        instagram_url: settingsForm.instagram_url.trim(),
         banner_days: String(Math.max(1, parseInt(settingsForm.banner_days) || 30)),
         admin_recovery_email: settingsForm.admin_recovery_email.trim(),
         min_dest_packages: String(Math.max(0, parseInt(settingsForm.min_dest_packages) || 1)),

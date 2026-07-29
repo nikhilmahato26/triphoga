@@ -10,6 +10,9 @@ import PackageCard from '@/components/PackageCard'
 import Footer from '@/components/Footer'
 import ClientsMarquee from '@/components/ClientsMarquee'
 import TeamSection from '@/components/TeamSection'
+import WhyChooseUsSection from '@/components/WhyChooseUsSection'
+import OurServicesSection from '@/components/OurServicesSection'
+import TrustSection from '@/components/TrustSection'
 import { usePackages } from '@/hooks/usePackages'
 import { usePhone, useWhatsapp, useEmail, useEmail2 } from '@/hooks/useSettings'
 import {
@@ -332,6 +335,10 @@ export default function HomePage() {
       <ClientsMarquee />
       <TeamSection />
       
+      <OurServicesSection />
+      <TrustSection />
+      <WhyChooseUsSection />
+
       <FleetSection phone={phone} />
       <ContactSection phone={phone} email={email} whatsapp={whatsapp} />
 
