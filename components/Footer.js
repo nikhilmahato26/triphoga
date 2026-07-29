@@ -79,6 +79,7 @@ export default function Footer() {
               {email2 && <li><a href={`mailto:${email2}`} className="flex items-center gap-2 hover:text-orange-400 transition-colors"><Mail size={14}/> {email2.toLowerCase()}</a></li>}
               <li><a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-green-400 transition-colors"><MessageCircle size={14}/> WhatsApp Us</a></li>
               <li><a href="https://maps.app.goo.gl/cQp5bUePhXKk3tin6?g_st=awb" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 hover:text-orange-400 transition-colors"><MapPin size={14} className="mt-0.5 shrink-0"/> <span className="leading-tight">239, Vivek vihar, Ranipur mor,<br/>Haridwar-249401</span></a></li>
+              <li><a href="https://maps.app.goo.gl/bCAXe6AwZZK3dsUK8?g_st=awb" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 hover:text-orange-400 transition-colors"><MapPin size={12} className="mt-0.5 shrink-0"/> <span className="leading-tight text-xs mt-0.5 opacity-80">Flat number 03, Aravalli apartments,<br/>Iris global mahipalpur bypass, Delhi</span></a></li>
             </ul>
           </div>
         </div>

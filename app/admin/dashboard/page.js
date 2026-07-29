@@ -9,6 +9,7 @@ import HomestayFields from '@/components/HomestayFields'
 import ImageUploader from '@/components/ImageUploader'
 import ClientsAdmin from '@/components/ClientsAdmin'
 import TeamAdmin from '@/components/TeamAdmin'
+import FleetAdmin from '@/components/FleetAdmin'
 import {
   Plus, Pencil, Copy, Trash2, LogOut, Eye, X, Check, ExternalLink, AlertTriangle,
   Package, MapPin, Inbox, Settings, Phone, MessageCircle, Mail, Calendar,
@@ -727,6 +728,7 @@ export default function Dashboard() {
               { key: 'gallery',       label: 'Gallery',      icon: ImageIcon },
               { key: 'clients',       label: 'Clients',      icon: Building2 },
               { key: 'team',          label: 'Team',         icon: Users },
+              { key: 'fleet',         label: 'Fleet',        icon: Ship },
               { key: 'settings',      label: 'Settings',     icon: Settings },
             ].map(({ key, label, icon: Icon, badge }) => (
               <button key={key} onClick={() => setSection(key)}
@@ -1278,6 +1280,7 @@ export default function Dashboard() {
 
         {section === 'clients' && <ClientsAdmin />}
         {section === 'team' && <TeamAdmin />}
+        {section === 'fleet' && <FleetAdmin />}
 
         {section === 'settings' && (
           <>
