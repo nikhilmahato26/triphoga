@@ -14,7 +14,7 @@ const search = `          {/* Logo */}
             </div>
             <span
               className="font-bold text-lg md:text-3xl leading-tight hidden sm:block"
-              style={{ fontFamily: 'Syne, sans-serif', color: scrolled ? '#1a3c2e' : '#fff' }}
+              style={{ fontFamily: 'Poppins, sans-serif', color: scrolled ? '#1a3c2e' : '#fff' }}
             >
               Triphoga<br />
               <span style={{ color: '#7e5233', fontWeight: 700 }}>Trips</span>
@@ -33,7 +33,7 @@ const replace = `          {/* Logo */}
             </div>
             <span
               className="font-bold text-base md:text-xl leading-tight hidden sm:block"
-              style={{ fontFamily: 'Syne, sans-serif', color: scrolled ? '#153e2d' : '#fff' }}
+              style={{ fontFamily: 'Poppins, sans-serif', color: scrolled ? '#153e2d' : '#fff' }}
             >
               Triphoga
             </span>

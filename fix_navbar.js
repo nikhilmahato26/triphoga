@@ -32,8 +32,8 @@ const navStyleReplace = `        background: 'rgba(255,255,255,1)',
 content = content.replace(navStyleSearch, navStyleReplace);
 
 // 3. Update brand text color
-const brandColorSearch = `style={{ fontFamily: 'Syne, sans-serif', color: scrolled ? '#153e2d' : '#fff' }}`;
-const brandColorReplace = `style={{ fontFamily: 'Syne, sans-serif', color: '#153e2d' }}`;
+const brandColorSearch = `style={{ fontFamily: 'Poppins, sans-serif', color: scrolled ? '#153e2d' : '#fff' }}`;
+const brandColorReplace = `style={{ fontFamily: 'Poppins, sans-serif', color: '#153e2d' }}`;
 content = content.replace(brandColorSearch, brandColorReplace);
 
 // 4. Update link text color

@@ -91,7 +91,7 @@ export default function AgencyRegisterPage() {
           <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,#22c55e,#16a34a)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
             <Check size={36} style={{ color: '#fff' }} />
           </div>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 26, color: '#111', marginBottom: 10 }}>Application Submitted!</h2>
+          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 26, color: '#111', marginBottom: 10 }}>Application Submitted!</h2>
           <p style={{ color: '#6b7280', lineHeight: 1.7, marginBottom: 28, fontSize: 15 }}>
             Your agency registration is under review. Our admin team will get back to you soon. You&apos;ll receive an email once approved.
           </p>
@@ -116,7 +116,7 @@ export default function AgencyRegisterPage() {
               <Building2 size={22} style={{ color: '#fff' }} />
             </div>
             <div>
-              <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, color: '#fff', margin: 0 }}>Join as Agency</h1>
+              <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: '#fff', margin: 0 }}>Join as Agency</h1>
               <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: 13, margin: 0 }}>Partner with us to list your Kerala packages</p>
             </div>
           </div>

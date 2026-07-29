@@ -4,8 +4,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Syne', 'sans-serif'],
+        sans: ['Poppins', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
       },
       colors: {
         't-brown': { 50:'#fdf8f4', 100:'#faeee4', 200:'#f3d7c2', 300:'#e9bc9a', 400:'#da986d', 500:'#c97a48', DEFAULT:'#7e5233', 600:'#bc6137', 700:'#9d4c2e', 800:'#7e5233', 900:'#66422b' },

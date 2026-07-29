@@ -52,7 +52,7 @@ export default function AgencyLoginPage() {
               <Building2 size={22} style={{ color: '#fff' }} />
             </div>
             <div>
-              <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 22, color: '#fff', margin: 0 }}>Agency Portal</h1>
+              <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 22, color: '#fff', margin: 0 }}>Agency Portal</h1>
               <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, margin: 0 }}>Sign in to manage your packages</p>
             </div>
           </div>

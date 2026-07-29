@@ -45,7 +45,7 @@ export default function ContactSection({ phone, email, whatsapp }) {
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
             Get In Touch
           </p>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
             Contact <span style={{ color: '#7e5233' }}>Us</span>
           </h2>
           <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
@@ -56,7 +56,7 @@ export default function ContactSection({ phone, email, whatsapp }) {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 40 }}>
           {/* Left Column: Form */}
           <div style={{ background: '#fff', padding: 32, borderRadius: 24, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 24 }}>Send an Inquiry</h3>
+            <h3 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 24 }}>Send an Inquiry</h3>
             {status === 'sent' ? (
               <div style={{ textAlign: 'center', padding: '40px 0' }}>
                 <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#dcfce7', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16 }}>
@@ -113,7 +113,7 @@ export default function ContactSection({ phone, email, whatsapp }) {
           {/* Right Column: Contact details & Map */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             <div style={{ background: '#fff', padding: 32, borderRadius: 24, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
-              <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 24 }}>Contact Details</h3>
+              <h3 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 24 }}>Contact Details</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <a href={`tel:+${phone}`} style={{ display: 'flex', alignItems: 'flex-start', gap: 16, textDecoration: 'none', color: 'inherit' }}>
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>

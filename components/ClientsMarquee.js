@@ -22,7 +22,7 @@ export default function ClientsMarquee() {
         <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
           Our Trusted Partners
         </p>
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111' }}>
+        <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111' }}>
           Our Hospitality <span style={{ color: '#7e5233' }}>Partners</span>
         </h2>
       </div>

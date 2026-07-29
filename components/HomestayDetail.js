@@ -49,7 +49,7 @@ export default function HomestayDetail({ pkg, phone, whatsapp, isMobile }) {
   const mapHref = pkg.mapUrl || (pkg.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pkg.address)}` : '')
 
   const roomWa = (room) => `https://wa.me/${whatsapp}?text=${encodeURIComponent(`Hi! I'd like to book the "${room.name}" room at ${pkg.title} (${pkg.id})${room.price ? ` — ${fmt(room.price)}` : ''}.`)}`
-  const heading = { fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: isMobile ? 20 : 26, color: '#111', margin: 0 }
+  const heading = { fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: isMobile ? 20 : 26, color: '#111', margin: 0 }
   const wrap = { maxWidth: 920, margin: '0 auto', padding: isMobile ? '0 16px' : '0 24px' }
 
   return (

@@ -161,7 +161,7 @@ export default function PackagePage({ params }) {
                 <Clock size={10} /> {!isNaN(pkg.duration) && pkg.duration !== '' ? pkg.duration + ' Days' : pkg.duration}
               </span>
             </div>
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.8rem, 5vw, 3.5rem)', color: '#fff', marginBottom: 6, lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: isMobile ? 'clamp(1.5rem, 6vw, 2.2rem)' : 'clamp(1.8rem, 5vw, 3.5rem)', color: '#fff', marginBottom: 6, lineHeight: 1.1 }}>
               {pkg.title}
             </h1>
             <p style={{ color: 'rgba(255,255,255,0.75)', fontSize: isMobile ? 14 : 18 }}>{pkg.subtitle}</p>
@@ -178,14 +178,14 @@ export default function PackagePage({ params }) {
 
             {/* Overview */}
             <section style={{ marginBottom: 36 }}>
-              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 12 }}>Overview</h2>
+              <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 12 }}>Overview</h2>
               <p style={{ color: '#4b5563', lineHeight: 1.8, fontSize: 15 }}>{pkg.overview}</p>
             </section>
 
             {/* Highlights */}
             {pkg.highlights?.length > 0 && (
               <section style={{ marginBottom: 36 }}>
-                <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 14 }}>Highlights</h2>
+                <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 14 }}>Highlights</h2>
                 <ul style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10, listStyle: 'none', padding: 0, margin: 0 }}>
                   {pkg.highlights.map((h, i) => (
                     <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, fontSize: 14, color: '#374151' }}>
@@ -229,7 +229,7 @@ export default function PackagePage({ params }) {
 
               return (
                 <section style={{ marginBottom: 36 }}>
-                  <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 16 }}>Available Departures</h2>
+                  <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 16 }}>Available Departures</h2>
                   <div style={{ border: '1px solid #e5e7eb', borderRadius: 16, overflow: 'hidden' }}>
                     {monthOrder.map((month, mi) => (
                       <div key={month} style={{ borderBottom: mi < monthOrder.length - 1 ? '1px solid #e5e7eb' : 'none' }}>
@@ -264,7 +264,7 @@ export default function PackagePage({ params }) {
             {/* Itinerary */}
             {pkg.itinerary?.length > 0 && (
               <section style={{ marginBottom: 36 }}>
-                <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 18 }}>
+                <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: isMobile ? 20 : 24, color: '#111', marginBottom: 18 }}>
                   Day-wise Itinerary
                 </h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
@@ -404,7 +404,7 @@ export default function PackagePage({ params }) {
                   <Send size={16} style={{ color: '#fff' }} />
                 </div>
                 <div>
-                  <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: isMobile ? 18 : 22, color: '#111', margin: 0 }}>Send an Enquiry</h2>
+                  <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: isMobile ? 18 : 22, color: '#111', margin: 0 }}>Send an Enquiry</h2>
                   <p style={{ fontSize: 13, color: '#9ca3af', margin: 0 }}>We&apos;ll get back to you within a few hours</p>
                 </div>
               </div>

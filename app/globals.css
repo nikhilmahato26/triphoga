@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Inter', sans-serif;
-  --font-display: 'Syne', sans-serif;
+  --font-sans: 'Poppins', sans-serif;
+  --font-display: 'Poppins', sans-serif;
 
   --color-saffron-50: #fff7f0;
   --color-saffron-100: #ffe4cc;
@@ -31,7 +31,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { background: #fff; color: #1a1a1a; font-family: 'Inter', sans-serif; }
+body { background: #fff; color: #1a1a1a; font-family: 'Poppins', sans-serif; }
 
 ::selection { background: rgba(232,82,10,0.25); }
 ::-webkit-scrollbar { width: 5px; }

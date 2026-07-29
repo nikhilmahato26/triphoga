@@ -82,7 +82,7 @@ export default function AdminForgotPasswordPage() {
           <div style={{ width: 72, height: 72, borderRadius: '50%', background: 'linear-gradient(135deg,#22c55e,#16a34a)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
             <Check size={36} style={{ color: '#fff' }} />
           </div>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 10 }}>Password Reset!</h2>
+          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 24, color: '#111', marginBottom: 10 }}>Password Reset!</h2>
           <p style={{ color: '#6b7280', lineHeight: 1.7, marginBottom: 28, fontSize: 15 }}>
             Your admin password has been updated. You can now sign in with your new password.
           </p>
@@ -106,7 +106,7 @@ export default function AdminForgotPasswordPage() {
           <div style={{ width: 52, height: 52, borderRadius: '50%', background: 'rgba(255,255,255,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 10px' }}>
             <KeyRound size={24} style={{ color: '#fff' }} />
           </div>
-          <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 20, color: '#fff', margin: '0 0 4px' }}>Forgot Password</h1>
+          <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 20, color: '#fff', margin: '0 0 4px' }}>Forgot Password</h1>
           <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)', margin: 0 }}>Reset your admin password via OTP</p>
         </div>
 

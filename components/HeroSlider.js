@@ -104,7 +104,7 @@ export default function HeroSlider() {
               </div>
             )}
 
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(1rem, 8vw, 3rem)', lineHeight: 1, color: '#fff', marginBottom: 10 }}>
+            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 'clamp(1rem, 8vw, 3rem)', lineHeight: 1, color: '#fff', marginBottom: 10 }}>
               {slide.title}
             </h1>
             {slide.tagline && (

@@ -20,7 +20,7 @@ export default function TeamSection() {
           <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
             Our People
           </p>
-          <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+          <h2 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
             Meet <span style={{ color: '#7e5233' }}>Our Team</span>
           </h2>
           <p style={{ color: '#6b7280', maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
@@ -47,7 +47,7 @@ export default function TeamSection() {
                 <img src={member.image_url} alt={member.name} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ padding: '24px', textAlign: 'center', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                <h3 style={{ margin: 0, fontFamily: 'Syne, sans-serif', fontSize: '1.25rem', fontWeight: 700, color: '#111' }}>{member.name}</h3>
+                <h3 style={{ margin: 0, fontFamily: 'Poppins, sans-serif', fontSize: '1.25rem', fontWeight: 700, color: '#111' }}>{member.name}</h3>
                 <p style={{ margin: '8px 0 0', color: '#7e5233', fontSize: '0.9rem', fontWeight: 600 }}>{member.role}</p>
               </div>
             </div>

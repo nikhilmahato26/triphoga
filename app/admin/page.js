@@ -48,7 +48,7 @@ export default function AdminLogin() {
             <div style={{ width: 74, height: 74, borderRadius: '50%', overflow: 'hidden', border: '4px solid rgba(255,255,255,0.3)', margin: '0 auto 12px' , background:'#ffffff'}}>
               <Image src="/logo.png" alt="Triphoga" width={64} height={64} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
-            <h1 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 20, color: '#fff', marginBottom: 4 }}>Triphoga</h1>
+            <h1 style={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: 20, color: '#fff', marginBottom: 4 }}>Triphoga</h1>
             <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.6)' }}>Admin Panel</p>
           </div>
 
