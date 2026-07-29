@@ -163,7 +163,7 @@ export default function FleetAdmin() {
               </div>
               <div>
                 <label style={S.label}>Capacity</label>
-                <input type="number" value={form.capacity} onChange={e => setForm({ ...form, capacity: e.target.value })} style={S.input} placeholder="e.g. 4" />
+                <input type="text" value={form.capacity} onChange={e => setForm({ ...form, capacity: e.target.value })} style={S.input} placeholder="e.g. 4+1 Seats, 32-52 Seats" />
               </div>
               <div>
                 <label style={S.label}>Tag (Label)</label>

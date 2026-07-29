@@ -139,12 +139,30 @@ export default function ContactSection({ phone, email, whatsapp }) {
                   <div style={{ width: 44, height: 44, borderRadius: 12, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <MapPin size={20} style={{ color: '#7e5233' }} />
                   </div>
-                  <div>
-                    <div style={{ fontSize: 12, fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Office Address</div>
-                    <div style={{ fontSize: 15, color: '#4b5563', marginTop: 4, lineHeight: 1.5 }}>
-                      TripHoga<br/>
-                      239, Vivek vihar, Ranipur mor,<br/>
-                      Haridwar-249401
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Head Office</div>
+                      <div style={{ fontSize: 15, color: '#4b5563', marginTop: 4, lineHeight: 1.5 }}>
+                        TripHoga<br/>
+                        239, Vivek vihar, Ranipur mor,<br/>
+                        Haridwar-249401
+                      </div>
+                      <a href="https://maps.app.goo.gl/cQp5bUePhXKk3tin6?g_st=awb" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: '#7e5233', display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 6, textDecoration: 'none' }}>
+                        View on Map
+                      </a>
+                    </div>
+                    
+                    <div style={{ height: 1, background: '#f3f4f6', width: '100%' }} />
+                    
+                    <div>
+                      <div style={{ fontSize: 12, fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Branch Office</div>
+                      <div style={{ fontSize: 15, color: '#4b5563', marginTop: 4, lineHeight: 1.5 }}>
+                        Flat number 03, Aravalli apartments,<br/>
+                        Iris global mahipalpur bypass, Delhi
+                      </div>
+                      <a href="https://maps.app.goo.gl/bCAXe6AwZZK3dsUK8?g_st=awb" target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, fontWeight: 700, color: '#7e5233', display: 'inline-flex', alignItems: 'center', gap: 4, marginTop: 6, textDecoration: 'none' }}>
+                        View on Map
+                      </a>
                     </div>
                   </div>
                 </div>
