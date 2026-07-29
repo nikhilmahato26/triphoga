@@ -84,26 +84,57 @@ export default function TeamAdmin() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: 20 }}>
-        {team.map(member => (
-          <div key={member.id} style={S.card}>
-            <div style={{ position: 'relative', width: '100%', paddingTop: '100%', borderRadius: 8, overflow: 'hidden' }}>
-              <img src={member.image_url} alt={member.name} style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ fontWeight: 700, fontSize: 16 }}>{member.name}</div>
-              <div style={{ fontSize: 13, color: '#7e5233', fontWeight: 600 }}>{member.role}</div>
-            </div>
-            <div style={{ display: 'flex', gap: 10, marginTop: 'auto' }}>
-              <button onClick={() => { setForm(member); setModal(true) }} style={{ ...S.btn('#f3f4f6', '#374151'), flex: 1, justifyContent: 'center' }}>
-                <Edit2 size={14} /> Edit
-              </button>
-              <button onClick={() => handleDelete(member.id)} style={{ ...S.btn('#fef2f2', '#dc2626'), flex: 1, justifyContent: 'center' }}>
-                <Trash2 size={14} /> Delete
-              </button>
-            </div>
+      <div style={S.card}>
+        {team.length === 0 ? (
+          <div style={{ padding: '48px 24px', textAlign: 'center', color: '#9ca3af' }}>
+            <p>No team members found. Add some to get started.</p>
           </div>
-        ))}
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <thead>
+                <tr style={{ background: '#f9fafb', borderBottom: '1px solid #f3f4f6' }}>
+                  {['ID', 'Name', 'Role', 'Photo', 'Actions'].map((h, i) => (
+                    <th key={h} style={{ padding: '10px 16px', textAlign: i === 4 ? 'right' : 'left', fontWeight: 700, color: '#6b7280', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {team.map((member, idx) => (
+                  <tr key={member.id} style={{ borderBottom: idx < team.length - 1 ? '1px solid #f9fafb' : 'none' }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#fafafa'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    <td style={{ padding: '12px 16px' }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: '#7e5233', background: '#fff5ef', padding: '3px 8px', borderRadius: 6, fontFamily: 'monospace', letterSpacing: '0.03em', whiteSpace: 'nowrap' }}>{member.id}</span>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <div style={{ fontWeight: 600, color: '#111', fontSize: 13 }}>{member.name}</div>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <div style={{ fontSize: 13, color: '#7e5233', fontWeight: 600 }}>{member.role}</div>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <div style={{ width: 44, height: 44, borderRadius: '50%', overflow: 'hidden', background: '#f3f4f6' }}>
+                        {member.image_url && <img src={member.image_url} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                      </div>
+                    </td>
+                    <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                        <button onClick={() => { setForm(member); setModal(true) }} style={{ ...S.btn('#f3f4f6', '#374151'), padding: '6px 10px' }}>
+                          <Edit2 size={14} /> Edit
+                        </button>
+                        <button onClick={() => handleDelete(member.id)} style={{ ...S.btn('#fef2f2', '#dc2626'), padding: '6px 10px' }}>
+                          <Trash2 size={14} /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {modal && (

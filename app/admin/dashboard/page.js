@@ -182,7 +182,6 @@ export default function Dashboard() {
   }
 
   const handleDeleteGallery = async (id) => {
-    if (!confirm('Delete this image?')) return
     try {
       await fetch('/api/gallery?id=' + id, { method: 'DELETE' })
       await fetchGallery()
@@ -1282,183 +1281,133 @@ export default function Dashboard() {
 
         {section === 'settings' && (
           <>
-            <div style={{ marginBottom: 24 }}>
-              <h2 style={{ fontWeight: 700, fontSize: 18, color: '#111', margin: 0 }}>Business Settings</h2>
-              <p style={{ fontSize: 13, color: '#9ca3af', margin: '4px 0 0' }}>Changes are reflected instantly across the website.</p>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-
-              <div style={{ ...S.card, padding: '32px 36px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '40px 60px' }}>
-                {/* Phone */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Phone size={15} style={{ color: '#7e5233' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Phone Number</div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>Used for the "Call Us" button across the site</div>
-                    </div>
-                  </div>
-                  <label style={S.label}>Number (with country code, no +)</label>
-                  <input value={settingsForm.phone} onChange={e => setSettingsForm(s => ({ ...s, phone: e.target.value }))} style={{ ...S.input, marginBottom: 6 }} placeholder="e.g. 918062179246" />
-                  <p style={{ fontSize: 11, color: '#9ca3af', margin: '0 0 12px' }}>Format: 91 + 10-digit mobile (e.g. 919876543210)</p>
-                  {settingsForm.phone.replace(/\D/g,'') && (
-                    <a href={`tel:+${settingsForm.phone.replace(/\D/g,'')}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#7e5233', textDecoration: 'none', padding: '5px 12px', borderRadius: 999, border: '1px solid #fbd0b5', background: '#fff5ef' }}>
-                      <Phone size={12} /> Preview call link
-                    </a>
-                  )}
-                </div>
-
-
-
-                {/* WhatsApp */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <MessageCircle size={15} style={{ color: '#25d366' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>WhatsApp Number</div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>Used for all WhatsApp chat & enquiry buttons</div>
-                    </div>
-                  </div>
-                  <label style={S.label}>WhatsApp Number (with country code, no +)</label>
-                  <input value={settingsForm.whatsapp} onChange={e => setSettingsForm(s => ({ ...s, whatsapp: e.target.value }))} style={{ ...S.input, marginBottom: 6 }} placeholder="e.g. 918062179246 (leave blank to use phone number)" />
-                  <p style={{ fontSize: 11, color: '#9ca3af', margin: '0 0 12px' }}>Leave blank to use the same number as Phone</p>
-                  {(settingsForm.whatsapp || settingsForm.phone).replace(/\D/g,'') && (
-                    <a href={`https://wa.me/${(settingsForm.whatsapp || settingsForm.phone).replace(/\D/g,'')}`} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#25d366', textDecoration: 'none', padding: '5px 12px', borderRadius: 999, border: '1px solid #bbf7d0', background: '#f0fdf4' }}>
-                      <MessageCircle size={12} /> Preview WhatsApp link
-                    </a>
-                  )}
-                </div>
-
-
-
-                {/* Email */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#eff1ff', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Mail size={15} style={{ color: '#153e2d' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Business Email</div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>Shown on the contact section & enquiry responses</div>
-                    </div>
-                  </div>
-                  <label style={S.label}>Email Address</label>
-                  <input type="email" value={settingsForm.email} onChange={e => setSettingsForm(s => ({ ...s, email: e.target.value }))} style={{ ...S.input, marginBottom: 6 }} placeholder="e.g. hello@greenkeralatrips.com" />
-                  {settingsForm.email.trim() && (
-                    <a href={`mailto:${settingsForm.email.trim()}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#153e2d', textDecoration: 'none', padding: '5px 12px', borderRadius: 999, border: '1px solid #c7d0ff', background: '#eff1ff', marginTop: 6 }}>
-                      <Mail size={12} /> Preview email link
-                    </a>
-                  )}
-                </div>
-
-
-
-                {/* Secondary Email */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#f0fdf4', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Mail size={15} style={{ color: '#22c55e' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Secondary Email <span style={{ fontSize: 11, fontWeight: 500, color: '#9ca3af' }}>(optional)</span></div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>A second contact email shown on the website</div>
-                    </div>
-                  </div>
-                  <label style={S.label}>Secondary Email Address</label>
-                  <input type="email" value={settingsForm.email2} onChange={e => setSettingsForm(s => ({ ...s, email2: e.target.value }))} style={{ ...S.input, marginBottom: 6 }} placeholder="e.g. support@greenkeralatrips.com" />
-                  {settingsForm.email2.trim() && (
-                    <a href={`mailto:${settingsForm.email2.trim()}`} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontSize: 12, color: '#22c55e', textDecoration: 'none', padding: '5px 12px', borderRadius: 999, border: '1px solid #bbf7d0', background: '#f0fdf4', marginTop: 6 }}>
-                      <Mail size={12} /> Preview email link
-                    </a>
-                  )}
-                </div>
-
-
-
-                {/* Category Visibility */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#fbf8f1', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <MapPin size={15} style={{ color: '#7e5233' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Category Visibility</div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>Minimum packages required to show a destination on the customer site</div>
-                    </div>
-                  </div>
-                  <label style={S.label}>Minimum Packages</label>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <input
-                      type="number" min="0" max="99"
-                      value={settingsForm.min_dest_packages}
-                      onChange={e => setSettingsForm(s => ({ ...s, min_dest_packages: e.target.value }))}
-                      style={{ ...S.input, maxWidth: 90 }}
-                    />
-                    <span style={{ fontSize: 13, color: '#6b7280', lineHeight: 1.5 }}>
-                      {parseInt(settingsForm.min_dest_packages) === 0
-                        ? 'Show all destinations even with 0 packages'
-                        : `Hide destinations with fewer than ${settingsForm.min_dest_packages} package${parseInt(settingsForm.min_dest_packages) !== 1 ? 's' : ''}`}
-                    </span>
-                  </div>
-                </div>
-
-
-
-                {/* Admin Account */}
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
-                    <div style={{ width: 34, height: 34, borderRadius: 10, background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                      <Settings size={15} style={{ color: '#d97706' }} />
-                    </div>
-                    <div>
-                      <div style={{ fontWeight: 700, fontSize: 14, color: '#111' }}>Admin Account</div>
-                      <div style={{ fontSize: 11, color: '#9ca3af' }}>Change your login username or recovery email</div>
-                    </div>
-                  </div>
-
-                  {/* Username */}
-                  <label style={S.label}>Login Username</label>
-                  <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-                    <input
-                      value={newUsername}
-                      onChange={e => setNewUsername(e.target.value)}
-                      style={{ ...S.input, flex: 1 }}
-                      placeholder="e.g. admin"
-                    />
-                    <button
-                      onClick={handleUpdateUsername}
-                      disabled={usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername}
-                      style={{ ...S.btn('#f3f4f6', '#555'), flexShrink: 0, opacity: (usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername) ? 0.5 : 1, cursor: (usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername) ? 'not-allowed' : 'pointer' }}>
-                      {usernameSaving ? <span style={{ width: 12, height: 12, border: '2px solid #ccc', borderTop: '2px solid #555', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> : <Check size={13} />}
-                      Update
-                    </button>
-                  </div>
-                  {adminUsername && <p style={{ fontSize: 11, color: '#9ca3af', margin: '0 0 16px' }}>Current: <strong>{adminUsername}</strong></p>}
-
-                  <div style={{ height: 1, background: '#f3f4f6', margin: '4px 0 16px' }} />
-
-                  {/* Recovery email */}
-                  <label style={S.label}>Recovery Email <span style={{ fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}>(for Forgot Password OTP)</span></label>
-                  <input
-                    type="email"
-                    value={settingsForm.admin_recovery_email}
-                    onChange={e => setSettingsForm(s => ({ ...s, admin_recovery_email: e.target.value }))}
-                    style={{ ...S.input, marginBottom: 6 }}
-                    placeholder="e.g. admin@greenkeralatrips.com"
-                  />
-                  <p style={{ fontSize: 11, color: '#9ca3af', margin: 0 }}>Saved with the main "Save All Settings" button below.</p>
-                </div>
-              </div>
-
+          <div style={{ width: '100%', maxWidth: 900, margin: '0 auto', background: '#fff', padding: '40px 48px', borderRadius: 16, boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24, borderBottom: '1px solid #e5e7eb', paddingBottom: 16 }}>
+              <h2 style={{ fontWeight: 700, fontSize: 24, color: '#111', margin: 0 }}>Settings</h2>
               <button onClick={handleSaveSettings} disabled={settingsSaving}
-                style={{ alignSelf: 'flex-start', padding: '11px 28px', borderRadius: 10, border: 'none', cursor: settingsSaving ? 'not-allowed' : 'pointer', background: 'linear-gradient(135deg,#7e5233,#c93d00)', color: '#fff', fontWeight: 700, fontSize: 14, display: 'flex', alignItems: 'center', gap: 7, opacity: settingsSaving ? 0.7 : 1 }}>
-                {settingsSaving ? <><span style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,0.3)', borderTop: '2px solid #fff', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> Saving...</> : <><Check size={15} /> Save All Settings</>}
+                style={{ padding: '10px 24px', borderRadius: 8, border: 'none', cursor: settingsSaving ? 'not-allowed' : 'pointer', background: '#e95a14', color: '#fff', fontWeight: 600, fontSize: 14, display: 'flex', alignItems: 'center', gap: 7, opacity: settingsSaving ? 0.7 : 1 }}>
+                {settingsSaving ? <><span style={{ width: 14, height: 14, border: '2px solid rgba(255,255,255,0.3)', borderTop: '2px solid #fff', borderRadius: '50%', animation: 'spin 1s linear infinite', display: 'inline-block' }} /> Saving...</> : 'Save Changes'}
               </button>
             </div>
+
+            {/* Section 1: Contact Information */}
+            <div style={{ marginBottom: 48 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>Contact Information</h3>
+              <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 24 }}>Manage your contact details and how customers reach you.</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Phone */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Phone Number</div>
+                  <div style={{ flex: 1 }}>
+                    <input value={settingsForm.phone} onChange={e => setSettingsForm(s => ({ ...s, phone: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="e.g. 918062179246" />
+                  </div>
+                </div>
+
+                {/* WhatsApp */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>WhatsApp Number</div>
+                  <div style={{ flex: 1 }}>
+                    <input value={settingsForm.whatsapp} onChange={e => setSettingsForm(s => ({ ...s, whatsapp: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="e.g. 918062179246" />
+                  </div>
+                </div>
+
+                {/* Email */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Business Email</div>
+                  <div style={{ flex: 1 }}>
+                    <input type="email" value={settingsForm.email} onChange={e => setSettingsForm(s => ({ ...s, email: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="hello@example.com" />
+                  </div>
+                </div>
+
+                {/* Secondary Email */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Secondary Email</div>
+                  <div style={{ flex: 1 }}>
+                    <input type="email" value={settingsForm.email2} onChange={e => setSettingsForm(s => ({ ...s, email2: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="support@example.com" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{ height: 1, background: '#f3f4f6', margin: '32px 0' }} />
+
+            {/* Section 2: Social Links */}
+            <div style={{ marginBottom: 48 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>Social Links</h3>
+              <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 24 }}>Update your social media links displayed on the website.</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Facebook */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Facebook URL</div>
+                  <div style={{ flex: 1 }}>
+                    <input type="url" value={settingsForm.facebook_url || ''} onChange={e => setSettingsForm(s => ({ ...s, facebook_url: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="https://facebook.com/..." />
+                  </div>
+                </div>
+
+                {/* Instagram */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Instagram URL</div>
+                  <div style={{ flex: 1 }}>
+                    <input type="url" value={settingsForm.instagram_url || ''} onChange={e => setSettingsForm(s => ({ ...s, instagram_url: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="https://instagram.com/..." />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div style={{ height: 1, background: '#f3f4f6', margin: '32px 0' }} />
+
+            {/* Section 3: Preferences */}
+            <div style={{ marginBottom: 48 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>Preferences</h3>
+              <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 24 }}>Manage your application preferences and layout settings.</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Min Dest Packages */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Category Visibility</div>
+                  <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <input type="number" min="0" max="99" value={settingsForm.min_dest_packages} onChange={e => setSettingsForm(s => ({ ...s, min_dest_packages: e.target.value }))} style={{ ...S.input, maxWidth: 90, borderRadius: 6 }} />
+                    <p style={{ fontSize: 12, color: '#9ca3af', margin: 0 }}>Minimum packages required to show a destination.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div style={{ height: 1, background: '#f3f4f6', margin: '32px 0' }} />
+
+            {/* Section 4: Security */}
+            <div style={{ marginBottom: 40 }}>
+              <h3 style={{ fontSize: 16, fontWeight: 700, color: '#111', marginBottom: 4 }}>Security</h3>
+              <p style={{ fontSize: 13, color: '#6b7280', marginBottom: 24 }}>Keep your admin account secure with extra alerts.</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+                {/* Admin Username */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Login Username</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', gap: 8, maxWidth: 400 }}>
+                      <input value={newUsername} onChange={e => setNewUsername(e.target.value)} style={{ ...S.input, flex: 1, borderRadius: 6 }} placeholder="e.g. admin" />
+                      <button onClick={handleUpdateUsername} disabled={usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername}
+                        style={{ ...S.btn('#f3f4f6', '#555'), flexShrink: 0, opacity: (usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername) ? 0.5 : 1, cursor: (usernameSaving || !newUsername.trim() || newUsername.trim() === adminUsername) ? 'not-allowed' : 'pointer', borderRadius: 6 }}>
+                        {usernameSaving ? 'Updating...' : 'Update'}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Recovery Email */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ flex: '0 0 250px', fontSize: 14, fontWeight: 500, color: '#374151' }}>Recovery Email</div>
+                  <div style={{ flex: 1 }}>
+                    <input type="email" value={settingsForm.admin_recovery_email} onChange={e => setSettingsForm(s => ({ ...s, admin_recovery_email: e.target.value }))} style={{ ...S.input, maxWidth: 400, borderRadius: 6 }} placeholder="admin@example.com" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
           </>
         )}
       </div>

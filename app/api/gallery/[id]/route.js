@@ -8,7 +8,8 @@ export async function DELETE(request, { params }) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 })
   }
   try {
-    const id = parseInt(params.id, 10)
+    const resolvedParams = await params;
+    const id = parseInt(resolvedParams.id, 10)
     if (isNaN(id)) {
       return Response.json({ error: 'Invalid ID' }, { status: 400 })
     }

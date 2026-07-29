@@ -23,7 +23,7 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
   const doUpload = async (file) => {
     if (!file) return
     if (!file.type?.startsWith('image/')) { toast.error('Please choose an image file'); return }
-    if (file.size > 10 * 1024 * 1024) { toast.error('Image must be under 10 MB'); return }
+    if (file.size > 2 * 1024 * 1024) { toast.error('Image must be under 2 MB'); return }
     setUploading(true)
     const prev = url
     try {
@@ -54,7 +54,12 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
   const spin = <span style={{ width: 20, height: 20, border: '3px solid rgba(232,82,10,0.25)', borderTop: '3px solid #7e5233', borderRadius: '50%', animation: 'iuspin 0.8s linear infinite', display: 'inline-block' }} />
 
   return (
-    <div style={{ marginTop: 6 }}>
+    <div 
+      style={{ marginTop: 6, position: 'relative' }}
+      onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+      onDragLeave={() => setDragOver(false)}
+      onDrop={onDrop}
+    >
       <style>{'@keyframes iuspin{to{transform:rotate(360deg)}}'}</style>
       <input ref={inputRef} type="file" accept="image/*" onChange={onPick} style={{ display: 'none' }} />
 
@@ -64,7 +69,12 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
           <span style={{ fontSize: 12, fontWeight: 600, color: '#9a3412' }}>Uploading…</span>
         </div>
       ) : url ? (
-        <div>
+        <div style={{ position: 'relative' }}>
+          {dragOver && (
+            <div style={{ position: 'absolute', inset: 0, zIndex: 10, background: 'rgba(255,245,239,0.9)', border: '2px dashed #7e5233', borderRadius: rounded, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#7e5233', fontWeight: 700, pointerEvents: 'none' }}>
+              Drop to replace
+            </div>
+          )}
           {onPosChange
             ? <ImagePositioner src={url} value={pos} onChange={onPosChange} height={height} rounded={rounded} />
             : (
@@ -85,16 +95,13 @@ export default function ImageUploader({ url, onUrlChange, pos, onPosChange, heig
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          onDragOver={e => { e.preventDefault(); setDragOver(true) }}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={onDrop}
           style={{ width: '100%', height, borderRadius: rounded, cursor: 'pointer', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, textAlign: 'center', padding: 12, background: dragOver ? '#fff5ef' : '#f9fafb', border: `1.5px dashed ${dragOver ? '#7e5233' : '#d1d5db'}`, transition: 'background 0.15s, border-color 0.15s' }}
         >
           <div style={{ width: 42, height: 42, borderRadius: 12, background: '#fff5ef', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <ImagePlus size={20} style={{ color: '#7e5233' }} />
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, color: '#374151', display: 'inline-flex', alignItems: 'center', gap: 6 }}><Upload size={13} /> Upload image</span>
-          <span style={{ fontSize: 11, color: '#9ca3af' }}>Click or drop a file · PNG/JPG up to 10 MB</span>
+          <span style={{ fontSize: 11, color: '#9ca3af' }}>Click or drop a file · PNG/JPG up to 2 MB</span>
         </button>
       )}
     </div>

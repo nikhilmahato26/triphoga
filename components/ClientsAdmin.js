@@ -84,23 +84,54 @@ export default function ClientsAdmin() {
         </button>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))', gap: 20 }}>
-        {clients.map(client => (
-          <div key={client.id} style={S.card}>
-            <div style={{ height: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fafafa', borderRadius: 8 }}>
-              <img src={client.logo_url} alt={client.name} style={{ maxWidth: '100%', maxHeight: '80%', objectFit: 'contain' }} />
-            </div>
-            <div style={{ fontWeight: 600, textAlign: 'center' }}>{client.name}</div>
-            <div style={{ display: 'flex', gap: 10 }}>
-              <button onClick={() => { setForm(client); setModal(true) }} style={{ ...S.btn('#f3f4f6', '#374151'), flex: 1, justifyContent: 'center' }}>
-                <Edit2 size={14} /> Edit
-              </button>
-              <button onClick={() => handleDelete(client.id)} style={{ ...S.btn('#fef2f2', '#dc2626'), flex: 1, justifyContent: 'center' }}>
-                <Trash2 size={14} /> Delete
-              </button>
-            </div>
+      <div style={S.card}>
+        {clients.length === 0 ? (
+          <div style={{ padding: '48px 24px', textAlign: 'center', color: '#9ca3af' }}>
+            <p>No clients found. Add some to get started.</p>
           </div>
-        ))}
+        ) : (
+          <div style={{ overflowX: 'auto' }}>
+            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
+              <thead>
+                <tr style={{ background: '#f9fafb', borderBottom: '1px solid #f3f4f6' }}>
+                  {['Client ID', 'Client Name', 'Logo', 'Actions'].map((h, i) => (
+                    <th key={h} style={{ padding: '10px 16px', textAlign: i === 3 ? 'right' : 'left', fontWeight: 700, color: '#6b7280', fontSize: 11, textTransform: 'uppercase', letterSpacing: '0.06em', whiteSpace: 'nowrap' }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {clients.map((client, idx) => (
+                  <tr key={client.id} style={{ borderBottom: idx < clients.length - 1 ? '1px solid #f9fafb' : 'none' }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#fafafa'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    <td style={{ padding: '12px 16px' }}>
+                      <span style={{ fontSize: 11, fontWeight: 700, color: '#7e5233', background: '#fff5ef', padding: '3px 8px', borderRadius: 6, fontFamily: 'monospace', letterSpacing: '0.03em', whiteSpace: 'nowrap' }}>{client.id}</span>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <div style={{ fontWeight: 600, color: '#111', fontSize: 13 }}>{client.name}</div>
+                    </td>
+                    <td style={{ padding: '12px 16px' }}>
+                      <div style={{ width: 80, height: 40, borderRadius: 6, overflow: 'hidden', background: '#f3f4f6', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {client.logo_url && <img src={client.logo_url} alt={client.name} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />}
+                      </div>
+                    </td>
+                    <td style={{ padding: '12px 16px', textAlign: 'right' }}>
+                      <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+                        <button onClick={() => { setForm(client); setModal(true) }} style={{ ...S.btn('#f3f4f6', '#374151'), padding: '6px 10px' }}>
+                          <Edit2 size={14} /> Edit
+                        </button>
+                        <button onClick={() => handleDelete(client.id)} style={{ ...S.btn('#fef2f2', '#dc2626'), padding: '6px 10px' }}>
+                          <Trash2 size={14} /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {modal && (

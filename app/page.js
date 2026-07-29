@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Navbar from '@/components/Navbar'
 import HeroSlider from '@/components/HeroSlider'
 import AboutSection from '@/components/AboutSection'
@@ -17,13 +17,13 @@ import { usePackages } from '@/hooks/usePackages'
 import { usePhone, useWhatsapp, useEmail, useEmail2 } from '@/hooks/useSettings'
 import {
   Phone, MessageCircle, MapPin, Mail, Star, Shield, Clock, Users,
-  Building2, ArrowRight, CheckCircle, ChevronDown,
+  Building2, ArrowRight, CheckCircle, ChevronDown, X, ChevronLeft, ChevronRight
 } from 'lucide-react'
 import Link from 'next/link'
 
-function ListingSection({ id, eyebrow, titlePre, titleHi, subtitle, items, showAll, setShowAll, onSelect, countFor, bg, defaultEmoji, defaultImg }) {
+function ListingSection({ id, eyebrow, titlePre, titleHi, subtitle, items, showAll, setShowAll, onSelect, countFor, bg, defaultEmoji, defaultImg, loading }) {
   const visible = items.filter(i => i.featured !== false)
-  if (visible.length === 0) return null
+  if (!loading && visible.length === 0) return null
   return (
     <section id={id} style={{ padding: '80px 24px', background: bg }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -38,36 +38,38 @@ function ListingSection({ id, eyebrow, titlePre, titleHi, subtitle, items, showA
         </div>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24 }}>
-          {(showAll ? visible : visible.slice(0, 4)).map(item => (
-            <button
-              key={item.id}
-              onClick={() => onSelect(item.name)}
-              style={{ position: 'relative', borderRadius: 20, overflow: 'hidden', height: 280, flex: '1 1 280px', maxWidth: 380, cursor: 'pointer', border: 'none', padding: 0, textAlign: 'left', display: 'block', boxShadow: '0 8px 30px rgba(0,0,0,0.15)', transition: 'transform 0.3s, box-shadow 0.3s' }}
-              onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.25)' }}
-              onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)' }}
-            >
-              <img src={item.image_url || defaultImg} alt={item.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.image_pos || 'center', transition: 'transform 0.5s' }} />
-              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%)' }} />
-              <span style={{ position: 'absolute', top: 14, right: 14, background: 'rgba(255,255,255,0.92)', color: '#111', fontWeight: 700, fontSize: 12, padding: '5px 12px', borderRadius: 999 }}>{countFor(item.name)} package{countFor(item.name) !== 1 ? 's' : ''}</span>
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24, textAlign: 'left' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 5 }}>
-                  <MapPin size={13} style={{ color: item.color }} />
-                  <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: item.color }}>{item.emoji || defaultEmoji} {item.location || 'Enquire'}</span>
+          {loading ? (
+            [...Array(4)].map((_, i) => (
+              <div key={i} style={{ borderRadius: 20, height: 280, flex: '1 1 280px', maxWidth: 380, background: '#f3f4f6', animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+            ))
+          ) : (
+            (showAll ? visible : visible.slice(0, 4)).map(item => (
+              <button
+                key={item.id}
+                onClick={() => onSelect(item.name)}
+                style={{ position: 'relative', borderRadius: 20, overflow: 'hidden', height: 280, flex: '1 1 280px', maxWidth: 380, cursor: 'pointer', border: 'none', padding: 0, textAlign: 'left', display: 'block', boxShadow: '0 8px 30px rgba(0,0,0,0.15)', transition: 'transform 0.3s, box-shadow 0.3s' }}
+                onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.25)' }}
+                onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)' }}
+              >
+                <img src={item.image_url || defaultImg} alt={item.name} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: item.image_pos || 'center', transition: 'transform 0.5s' }} />
+                <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%)' }} />
+                <span style={{ position: 'absolute', top: 14, right: 14, background: 'rgba(255,255,255,0.92)', color: '#111', fontWeight: 700, fontSize: 12, padding: '5px 12px', borderRadius: 999 }}>{countFor(item.name)} package{countFor(item.name) !== 1 ? 's' : ''}</span>
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: 24, textAlign: 'left' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 5 }}>
+                    <MapPin size={13} style={{ color: item.color }} />
+                    <span style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: item.color }}>{item.emoji || defaultEmoji} {item.location || 'Enquire'}</span>
+                  </div>
+                  <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 26, color: '#fff', marginBottom: 6, lineHeight: 1.1 }}>{item.name}</h3>
+                  <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item.description || ''}</p>
                 </div>
-                <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 26, color: '#fff', marginBottom: 6, lineHeight: 1.1 }}>{item.name}</h3>
-                <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>{item.description || ''}</p>
-              </div>
-            </button>
-          ))}
+              </button>
+            ))
+          )}
         </div>
-
-        {visible.length > 4 && (
-          <div style={{ textAlign: 'center', marginTop: 36 }}>
-            <button
-              onClick={() => setShowAll(s => !s)}
-              style={{ padding: '12px 32px', borderRadius: 999, border: '1.5px solid #7e5233', background: '#fff', color: '#7e5233', fontWeight: 700, fontSize: 14, cursor: 'pointer' }}
-            >
-              {showAll ? 'Show less' : `Show more (${visible.length - 4})`}
+        {!loading && visible.length > 4 && (
+          <div style={{ textAlign: 'center', marginTop: 40 }}>
+            <button onClick={() => setShowAll(!showAll)} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 24px', borderRadius: 999, border: '1px solid #e5e7eb', background: '#fff', color: '#111', fontWeight: 700, fontSize: 14, cursor: 'pointer', transition: 'all 0.2s' }} onMouseEnter={e => e.currentTarget.style.borderColor = '#111'} onMouseLeave={e => e.currentTarget.style.borderColor = '#e5e7eb'}>
+              {showAll ? 'Show Less' : `View All ${visible.length} Options`} <ChevronDown size={16} style={{ transform: showAll ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }} />
             </button>
           </div>
         )}
@@ -94,33 +96,30 @@ export default function HomePage() {
   const [showAllHS, setShowAllHS] = useState(false)
   const [showAllHB, setShowAllHB] = useState(false)
   const [gallery, setGallery] = useState([])
+  const [selectedImage, setSelectedImage] = useState(null)
   const [testimonials, setTestimonials] = useState([])
+  const testiRef = useRef(null)
+  const [initialLoading, setInitialLoading] = useState(true)
   const { packages, loaded: pkgsLoaded } = usePackages()
   const phone = usePhone()
   const whatsapp = useWhatsapp()
   const email = useEmail()
   const email2 = useEmail2()
   useEffect(() => {
-    fetch('/api/destinations')
-      .then(r => r.ok ? r.json() : [])
-      .then(setDestinations)
-      .catch(() => {})
-    fetch('/api/listings?type=homestay')
-      .then(r => r.ok ? r.json() : [])
-      .then(setHomestays)
-      .catch(() => {})
-    fetch('/api/listings?type=houseboat')
-      .then(r => r.ok ? r.json() : [])
-      .then(setHouseboats)
-      .catch(() => {})
-    fetch('/api/gallery')
-      .then(r => r.ok ? r.json() : [])
-      .then(setGallery)
-      .catch(() => {})
-    fetch('/api/testimonials')
-      .then(r => r.ok ? r.json() : [])
-      .then(setTestimonials)
-      .catch(() => {})
+    Promise.all([
+      fetch('/api/destinations').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('/api/listings?type=homestay').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('/api/listings?type=houseboat').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('/api/gallery').then(r => r.ok ? r.json() : []).catch(() => []),
+      fetch('/api/testimonials').then(r => r.ok ? r.json() : []).catch(() => [])
+    ]).then(([dests, hs, hb, gal, tests]) => {
+      setDestinations(dests)
+      setHomestays(hs)
+      setHouseboats(hb)
+      setGallery(gal)
+      setTestimonials(tests)
+      setInitialLoading(false)
+    })
   }, [])
 
   const visibleDestinations = destinations.filter(d => d.featured !== false)
@@ -158,7 +157,13 @@ export default function HomePage() {
             </p>
           </div>
 
-          {visibleDestinations.length > 0 && (
+          {initialLoading ? (
+            <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24 }}>
+              {[...Array(4)].map((_, i) => (
+                <div key={i} style={{ borderRadius: 20, height: 280, flex: '1 1 280px', maxWidth: 380, background: '#f3f4f6', animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+              ))}
+            </div>
+          ) : visibleDestinations.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 24 }}>
               {(showAllDest ? visibleDestinations : visibleDestinations.slice(0, 4)).map(dest => (
                 <button
@@ -187,7 +192,7 @@ export default function HomePage() {
             </div>
           )}
 
-          {visibleDestinations.length > 4 && (
+          {!initialLoading && visibleDestinations.length > 4 && (
             <div style={{ textAlign: 'center', marginTop: 36 }}>
               <button
                 onClick={() => setShowAllDest(s => !s)}
@@ -244,10 +249,10 @@ export default function HomePage() {
           </div>
 
           {!pkgsLoaded ? (
-            <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
-              <div style={{ width: 36, height: 36, border: '3px solid #fbf8f1', borderTop: '3px solid #7e5233', borderRadius: '50%', animation: 'spin 1s linear infinite', margin: '0 auto 12px' }} />
-              <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
-              <p style={{ fontSize: 14 }}>Loading packages...</p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 24 }}>
+              {[...Array(3)].map((_, i) => (
+                <div key={i} style={{ borderRadius: 16, height: 320, background: '#f9fafb', animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+              ))}
             </div>
           ) : shown.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 0', color: '#9ca3af' }}>
@@ -272,9 +277,9 @@ export default function HomePage() {
       </section>
 
       {/* ── Testimonials ── */}
-      {testimonials.length > 0 && (
+      {(initialLoading || testimonials.length > 0) && (
         <section id="testimonials" style={{ padding: '80px 24px', background: '#fbf8f1' }}>
-          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative' }}>
             <div style={{ textAlign: 'center', marginBottom: 48 }}>
               <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
                 What They Say
@@ -286,51 +291,81 @@ export default function HomePage() {
                 Real stories from our happy travellers.
               </p>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
-              {testimonials.map((t, idx) => (
-                <div key={idx} style={{ background: '#fff', padding: 32, borderRadius: 20, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
-                  <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
-                    {[...Array(5)].map((_, i) => <Star key={i} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
-                  </div>
-                  <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.6, fontStyle: 'italic', marginBottom: 24 }}>&quot;{t.text}&quot;</p>
-                  <div style={{ fontWeight: 700, color: '#111', fontSize: 15 }}>- {t.name}</div>
-                </div>
-              ))}
+            
+            <div style={{ position: 'relative' }}>
+              {!initialLoading && (
+                <>
+                  <button onClick={() => testiRef.current?.scrollBy({ left: -350, behavior: 'smooth' })} style={{ position: 'absolute', left: -20, top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: '#fff', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} aria-label="Previous">
+                    <ChevronLeft size={20} style={{ color: '#374151' }} />
+                  </button>
+                  <button onClick={() => testiRef.current?.scrollBy({ left: 350, behavior: 'smooth' })} style={{ position: 'absolute', right: -20, top: '50%', transform: 'translateY(-50%)', zIndex: 10, width: 44, height: 44, borderRadius: '50%', background: '#fff', border: '1px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }} aria-label="Next">
+                    <ChevronRight size={20} style={{ color: '#374151' }} />
+                  </button>
+                </>
+              )}
+              
+              <div ref={testiRef} style={{ display: 'flex', overflowX: 'auto', gap: 24, paddingBottom: 24, scrollBehavior: 'smooth', scrollSnapType: 'x mandatory', msOverflowStyle: 'none', scrollbarWidth: 'none' }} className="no-scrollbar">
+                <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
+                {initialLoading ? (
+                  [...Array(3)].map((_, i) => (
+                    <div key={i} style={{ minWidth: 320, flex: '0 0 auto', scrollSnapAlign: 'start', borderRadius: 20, height: 200, background: '#fff', animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                  ))
+                ) : (
+                  testimonials.map((t, idx) => (
+                    <div key={idx} style={{ minWidth: 320, maxWidth: 400, flex: '0 0 auto', scrollSnapAlign: 'start', background: '#fff', padding: 32, borderRadius: 20, boxShadow: '0 8px 30px rgba(0,0,0,0.06)' }}>
+                      <div style={{ display: 'flex', gap: 4, marginBottom: 16 }}>
+                        {[...Array(5)].map((_, i) => <Star key={i} size={16} style={{ color: '#f59e0b', fill: '#f59e0b' }} />)}
+                      </div>
+                      <p style={{ fontSize: 15, color: '#374151', lineHeight: 1.6, fontStyle: 'italic', marginBottom: 24 }}>&quot;{t.text}&quot;</p>
+                      <div style={{ fontWeight: 700, color: '#111', fontSize: 15 }}>- {t.name}</div>
+                    </div>
+                  ))
+                )}
+              </div>
             </div>
           </div>
         </section>
       )}
 
       {/* ── Gallery ── */}
-      <section id="gallery" style={{ padding: '80px 24px', background: '#fff' }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
-              Visual Journey
-            </p>
-            <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
-              Explore Our <span style={{ color: '#7e5233' }}>Gallery</span>
-            </h2>
-            <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
-              A glimpse into the magical experiences waiting for you.
-            </p>
+      {(initialLoading || gallery.length > 0) && (
+        <section id="gallery" style={{ padding: '80px 24px', background: '#fff' }}>
+          <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+            <div style={{ textAlign: 'center', marginBottom: 48 }}>
+              <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
+                Visual Journey
+              </p>
+              <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111', marginBottom: 12 }}>
+                Explore Our <span style={{ color: '#7e5233' }}>Gallery</span>
+              </h2>
+              <p style={{ color: '#6b7280', maxWidth: 500, margin: '0 auto', lineHeight: 1.6 }}>
+                A glimpse into the magical experiences waiting for you.
+              </p>
+            </div>
+            
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+              {initialLoading ? (
+                [...Array(6)].map((_, i) => (
+                  <div key={i} style={{ borderRadius: 16, aspectRatio: '4/3', background: '#f9fafb', animation: 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite' }} />
+                ))
+              ) : (
+                gallery.map((img, idx) => (
+                  <div key={img.id || idx} style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
+                    <img 
+                      src={img.image_url} 
+                      alt={`Gallery image ${idx + 1}`} 
+                      onClick={() => setSelectedImage(img.image_url)}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s', cursor: 'pointer' }} 
+                      onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                    />
+                  </div>
+                ))
+              )}
+            </div>
           </div>
-          
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
-            {gallery.map((img, idx) => (
-              <div key={img.id || idx} style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', aspectRatio: '4/3', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
-                <img 
-                  src={img.image_url} 
-                  alt={`Gallery image ${idx + 1}`} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s cursor-pointer' }} 
-                  onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.05)'}
-                  onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <ClientsMarquee />
       <TeamSection />
@@ -348,6 +383,21 @@ export default function HomePage() {
         style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 999, width: 56, height: 56, borderRadius: '50%', background: 'linear-gradient(135deg,#25d366,#128c7e)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 8px 24px rgba(37,211,102,0.5)', textDecoration: 'none' }}>
         <MessageCircle size={26} />
       </a>
+      {selectedImage && (
+        <div 
+          onClick={() => setSelectedImage(null)}
+          style={{ position: 'fixed', inset: 0, zIndex: 9999, background: 'rgba(0,0,0,0.85)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, cursor: 'zoom-out' }}>
+          <img src={selectedImage} alt="Fullscreen gallery" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', borderRadius: 8, boxShadow: '0 20px 40px rgba(0,0,0,0.4)' }} />
+          <button 
+            onClick={() => setSelectedImage(null)}
+            style={{ position: 'absolute', top: 24, right: 24, background: 'rgba(255,255,255,0.1)', color: '#fff', border: 'none', borderRadius: '50%', width: 44, height: 44, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', transition: 'background 0.2s' }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
+          >
+            <X size={24} />
+          </button>
+        </div>
+      )}
     </main>
   )
 }

@@ -19,10 +19,12 @@ export default function ClientsMarquee() {
   return (
     <section style={{ padding: '60px 24px', background: '#fafafa', overflow: 'hidden', borderTop: '1px solid #eaeaea' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', textAlign: 'center', marginBottom: 32 }}>
-        <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 'clamp(1.5rem, 3vw, 2rem)', color: '#111' }}>
-          Clients We Work For
+        <p style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: '#7e5233', marginBottom: 10 }}>
+          Our Trusted Partners
+        </p>
+        <h2 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 'clamp(2rem, 5vw, 3rem)', color: '#111' }}>
+          Our Hospitality <span style={{ color: '#7e5233' }}>Partners</span>
         </h2>
-        <div style={{ width: 60, height: 3, background: '#7e5233', margin: '16px auto 0' }} />
       </div>
 
       <div style={{ position: 'relative', width: '100vw', left: '50%', right: '50%', marginLeft: '-50vw', marginRight: '-50vw', overflow: 'hidden' }}>
@@ -34,7 +36,7 @@ export default function ClientsMarquee() {
           .client-marquee-track {
             display: flex;
             width: max-content;
-            animation: scroll-marquee 30s linear infinite;
+            animation: scroll-marquee 60s linear infinite;
           }
           .client-marquee-track:hover {
             animation-play-state: paused;
